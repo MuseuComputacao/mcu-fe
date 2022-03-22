@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from '@react-navigation/native';
+import axios from 'axios'
+import { useLinkTo } from '@react-navigation/native';
 
 function Copyright(props: any) {
   return (
@@ -29,7 +31,9 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const linkTo = useLinkTo();
+  
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
@@ -37,6 +41,19 @@ export default function SignIn() {
       email: data.get('email'),
       password: data.get('password'),
     });
+
+      await axios
+      .post('http://localhost:3000/api/auth/sign_in', { 
+        email: data.get('email'),
+        password: data.get('password')
+       })
+      .then(response => {
+         console.log(response)
+         linkTo('/admin/dashboard')
+      })
+      .catch(error => {
+         console.log(error)
+      });
   };
 
   return (
@@ -88,7 +105,7 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              <Link to="/admin/dashboard">Entrar</Link>
+              Entrar
             </Button>
             <Grid container>
               <Grid item>

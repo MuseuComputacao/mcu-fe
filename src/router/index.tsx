@@ -1,5 +1,5 @@
  const routes = {
-  prefixes: ['https://mychat.com', 'mychat://'],
+  prefixes: ['http://localhost:19006'],
   config: {
     screens: {
       Home: '',

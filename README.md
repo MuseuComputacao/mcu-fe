@@ -1,4 +1,4 @@
-# API Museu da Computação da UFRJ  | MCU-FE
+# Museu da Computação da UFRJ  | MCU-FE
 
 This project was generated with [React Native](https://reactnative.dev) and [Expo](https://expo.dev). Our main go is the create the control panel to manage the museum data.
 
@@ -18,11 +18,11 @@ Table of contents
 
 + Clone the repo and cd into it
 
-Next, use `Yarn install` to download all dependencies.
+Next, use `yarn` to download all dependencies.
 ## Usage
 
 ```
-expo start --web
+yarn web
 ```
 
 The application will become available at the URL:

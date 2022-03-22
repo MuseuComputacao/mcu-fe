@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from "react-native";
+import { useLinkTo } from '@react-navigation/native';
 
 import { SidebarBackground, SidebarSandwichIcon, SidebarNode, SidebarNodeText } from './styles'
 
 import FeatherIcons from 'react-native-vector-icons/Feather'
 
 const Sidebar = () => {
+    const linkTo = useLinkTo();
     const [isOpen, setIsOpen] = useState(true);
+    const handleSignOut = async () => {
+      linkTo('/admin')
+    }
 
     return(
         <SidebarBackground isOpen={isOpen}>
@@ -26,6 +30,10 @@ const Sidebar = () => {
             <SidebarNode isOpen={isOpen}>
                 <FeatherIcons name='user' size={25} />
                 <SidebarNodeText isOpen={isOpen}>Usuários</SidebarNodeText>
+            </SidebarNode>
+            <SidebarNode isOpen={isOpen}>
+                <FeatherIcons name='exit-outline' size={25} />
+                <SidebarNodeText isOpen={isOpen} onPress={handleSignOut}>Sair</SidebarNodeText>
             </SidebarNode>
         </SidebarBackground>
     )
