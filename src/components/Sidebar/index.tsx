@@ -18,6 +18,7 @@ const Sidebar = () => {
                 <FeatherIcons name='home' size={25} />
                 <SidebarNodeText isOpen={isOpen}>Dashboard</SidebarNodeText>
             </SidebarNode>
+
             <SidebarNode isOpen={isOpen}>
                 <FeatherIcons name='pie-chart' size={25} />
                 <SidebarNodeText isOpen={isOpen}>Gráficos</SidebarNodeText>

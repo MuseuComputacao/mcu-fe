@@ -5,19 +5,19 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link } from '@react-navigation/native';
 
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://museucomputacao.github.io/">
+      <Link to="/">
         Museu da computação UFRJ
       </Link>{' '}
       {new Date().getFullYear()}
@@ -88,17 +88,14 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Entrar
+              <Link to="/admin/dashboard">Entrar</Link>
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Esqueceu sua senha?
-                </Link>
-              </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Faça o seu cadastro aqui"}
+              </Grid>
+              <Grid item xs>
+                <Link to="/admin">
+                  Esqueceu sua senha?
                 </Link>
               </Grid>
             </Grid>

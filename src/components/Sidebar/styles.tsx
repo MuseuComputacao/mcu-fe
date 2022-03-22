@@ -26,7 +26,7 @@ export const SidebarNode = styled.TouchableOpacity`
     justify-content: ${props => props.isOpen ? "" : "center"};
     padding: 10px;
     width: ${props => props.isOpen ? "90%" : "80%"};
-    background-color: white;
+    background-color: ${props => props.isOpen ? "white" : "red"};
     border-radius: 10px;
     transition: none;
 `;
