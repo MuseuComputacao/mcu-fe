@@ -1,10 +1,11 @@
 import styled from 'styled-components/native';
+import { style } from '../../globalStyles';
 
 export const SidebarBackground = styled.View`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: blue;
+    background-color: ${style.colors.backgroundColor};
     height: 100%;
     width: ${props => props.isOpen ? "250px" : "80px"};
     padding: ${props => props.isOpen ? "15px" : "15px 0"};
@@ -26,9 +27,13 @@ export const SidebarNode = styled.TouchableOpacity`
     justify-content: ${props => props.isOpen ? "" : "center"};
     padding: 10px;
     width: ${props => props.isOpen ? "90%" : "80%"};
-    background-color: ${props => props.isOpen ? "white" : "red"};
+    background-color: ${style.colors.white};
     border-radius: 10px;
     transition: none;
+
+    &:hover{
+        background-color: ${style.colors.primary};
+    }
 `;
 
 export const SidebarNodeText = styled.Text`
