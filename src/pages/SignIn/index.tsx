@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, TouchableOpacity, Image } from "react-native";
+import { SafeAreaView, View, Text, TouchableOpacity, Image, Platform } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from 'react-native-paper';
 import { style } from '../../globalStyles';
@@ -81,6 +81,7 @@ const SignIn = () => {
                         defaultValue=""
                         render={({ field: { onBlur, onChange, value } }) => (
                             <TextInput
+                                autoComplete={ Platform.OS === 'web' ? 'none' : 'off' }
                                 error={errors.email}
                                 mode="outlined"
                                 activeOutlineColor={style.colors.primary}
@@ -113,6 +114,7 @@ const SignIn = () => {
                         defaultValue=""
                         render={({ field: { onBlur, onChange, value } }) => (
                             <TextInput
+                                autoComplete={ Platform.OS === 'web' ? 'none' : 'off' }
                                 error={errors.password}
                                 secureTextEntry={securePassword}
                                 right={
