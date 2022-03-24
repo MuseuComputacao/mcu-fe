@@ -54,7 +54,7 @@ const SignIn = () => {
                 password: data.password
             })
             .then(response => {
-                console.log(response)
+                console.log(response.headers)
                 linkTo('/admin/dashboard')
             })
             .catch(error => {
@@ -68,7 +68,7 @@ const SignIn = () => {
             <SignInView>
                 <SignInTitleView>
                     <Image
-                        style={{ borderRadius: 100, width: 80, height: 80 }}
+                        style={{ width: 100, height: 75 }}
                         source={require('../../../assets/museu-icon.png')}
                     />
                     <Title>Login</Title>
