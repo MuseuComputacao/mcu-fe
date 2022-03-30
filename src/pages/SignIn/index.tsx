@@ -6,6 +6,7 @@ import { style } from '../../globalStyles';
 import axios from "axios";
 import { Link, useLinkTo } from "@react-navigation/native";
 import { SignInView, SignInTitleView, Title, InputView, ForgotPasswordView, ForgotPassword, SubmitButton } from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface FormData {
     email: string;
@@ -43,20 +44,27 @@ const SignIn = () => {
     const linkTo = useLinkTo();
 
     const onSubmit = async (data: FormData) => {
-        console.log({
-            email: data.email,
-            password: data.password,
-        });
-
         await axios
             .post('http://localhost:3000/api/auth/sign_in', {
                 email: data.email,
                 password: data.password
             })
             .then(response => {
-                console.log(response.headers)
+                const user = {
+                  token: response.headers['access-token'],
+                  uid: response.headers.uid,
+                  client: response.headers.client,
+                  role: response.data.data.role,
+                  email: response.data.data.email
+                }
+                console.log('Response: ', user)
+                AsyncStorage.setItem('@user', JSON.stringify(user))    
                 linkTo('/admin/dashboard')
-            })
+              })
+              .then(async ()=> {
+                const value = await AsyncStorage.getItem('@user')
+                console.log(value)
+              })
             .catch(error => {
                 console.log(error)
             });
