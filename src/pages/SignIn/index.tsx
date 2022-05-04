@@ -8,6 +8,8 @@ import { Link, useLinkTo } from "@react-navigation/native";
 import { SignInView, SignInTitleView, Title, InputView, ForgotPasswordView, ForgotPassword, SubmitButton } from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import UserService from '../../services/UserServices/index';
+
 interface FormData {
     email: string;
     password: string;
@@ -26,16 +28,16 @@ const textInputTheme = {
 
 function Copyright(props: any) {
     return (
-      <Text>
-        {'Copyright © '}
-        <Link to="/" style={{ color: `${style.colors.primary}`, textDecorationLine: 'underline', textDecorationColor: `${style.colors.primary}` }}>
-          Museu da computação UFRJ
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Text>
+        <Text>
+            {'Copyright © '}
+            <Link to="/" style={{ color: `${style.colors.primary}`, textDecorationLine: 'underline', textDecorationColor: `${style.colors.primary}` }}>
+                Museu da computação UFRJ
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Text>
     );
-  }
+}
 
 const SignIn = () => {
 
@@ -44,27 +46,22 @@ const SignIn = () => {
     const linkTo = useLinkTo();
 
     const onSubmit = async (data: FormData) => {
-        await axios
-            .post('http://localhost:3000/api/auth/sign_in', {
-                email: data.email,
-                password: data.password
-            })
-            .then(response => {
-                const user = {
-                  token: response.headers['access-token'],
-                  uid: response.headers.uid,
-                  client: response.headers.client,
-                  role: response.data.data.role,
-                  email: response.data.data.email
-                }
-                console.log('Response: ', user)
-                AsyncStorage.setItem('@user', JSON.stringify(user))    
-                linkTo('/admin/dashboard')
-              })
-              .then(async ()=> {
+        UserService.login(data).then(response => {
+            const user = {
+                token: response.headers['access-token'],
+                uid: response.headers.uid,
+                client: response.headers.client,
+                role: response.data.data.role,
+                email: response.data.data.email
+            }
+            console.log('Response: ', user)
+            AsyncStorage.setItem('@user', JSON.stringify(user))
+            linkTo('/admin/dashboard')
+        })
+            .then(async () => {
                 const value = await AsyncStorage.getItem('@user')
                 console.log(value)
-              })
+            })
             .catch(error => {
                 console.log(error)
             });
@@ -89,7 +86,7 @@ const SignIn = () => {
                         defaultValue=""
                         render={({ field: { onBlur, onChange, value } }) => (
                             <TextInput
-                                autoComplete={ Platform.OS === 'web' ? 'none' : 'off' }
+                                autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
                                 error={errors.email}
                                 mode="outlined"
                                 activeOutlineColor={style.colors.primary}
@@ -122,7 +119,7 @@ const SignIn = () => {
                         defaultValue=""
                         render={({ field: { onBlur, onChange, value } }) => (
                             <TextInput
-                                autoComplete={ Platform.OS === 'web' ? 'none' : 'off' }
+                                autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
                                 error={errors.password}
                                 secureTextEntry={securePassword}
                                 right={
@@ -163,7 +160,7 @@ const SignIn = () => {
                     <Text style={{ color: `${style.colors.white}`, fontSize: '16px' }}>Entrar</Text>
                 </SubmitButton>
             </SignInView>
-            <Copyright/>
+            <Copyright />
         </SafeAreaView>
     )
 }

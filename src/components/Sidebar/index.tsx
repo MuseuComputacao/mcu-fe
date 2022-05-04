@@ -9,6 +9,8 @@ import { style } from '../../globalStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
 
+import UserServices from '../../services/UserServices';
+
 const Sidebar = () => {
     const linkTo = useLinkTo();
     const [isOpen, setIsOpen] = useState(true);
@@ -22,9 +24,7 @@ const Sidebar = () => {
           client:teste.client
         }
       }
-      await axios
-      .delete('http://localhost:3000/api/auth/sign_out', config)
-      .then(() => {
+      UserServices.logout(config).then(() => {
         linkTo('/admin')
       })
       .catch(error => {
