@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLinkTo } from '@react-navigation/native';
 
 import { SidebarBackground, SidebarSandwichIcon, SidebarNode, SidebarNodeText } from './styles'
@@ -11,17 +11,21 @@ import axios from "axios";
 
 import UserServices from '../../services/UserServices';
 
-const Sidebar = () => {
+interface SidebarProp{
+    func: any;
+}
+
+const Sidebar = ({func} :SidebarProp) => {
     const linkTo = useLinkTo();
     const [isOpen, setIsOpen] = useState(true);
     const handleSignOut = async () => {
       const value = await AsyncStorage.getItem('@user')
-      const teste = JSON.parse(value)
+      const userData = JSON.parse(value)
       const config = {
         headers: {
-          'access-token': teste.token,
-          uid: teste.uid,
-          client:teste.client
+          'access-token': userData.token,
+          uid: userData.uid,
+          client:userData.client
         }
       }
       UserServices.logout(config).then(() => {
@@ -32,13 +36,18 @@ const Sidebar = () => {
       });
     }
 
+    function handleSidebar(value: boolean){
+        setIsOpen(value);
+        func(value);
+    }
+
     return(
         <SidebarBackground isOpen={isOpen}>
-            <SidebarSandwichIcon isOpen={isOpen} onPress={() =>setIsOpen(!isOpen)}>
+            <SidebarSandwichIcon isOpen={isOpen} onPress={() => handleSidebar(!isOpen)}>
                 <FeatherIcons name='menu' size={25} color={style.colors.white}/>
             </SidebarSandwichIcon>
 
-            <SidebarNode isOpen={isOpen}>
+            <SidebarNode isOpen={isOpen} onPress={() => linkTo('/admin/dashboard')}>
                 <FeatherIcons name='home' size={25} />
                 <SidebarNodeText isOpen={isOpen}>Dashboard</SidebarNodeText>
             </SidebarNode>
@@ -48,7 +57,7 @@ const Sidebar = () => {
                 <SidebarNodeText isOpen={isOpen}>Gráficos</SidebarNodeText>
             </SidebarNode>
 
-            <SidebarNode isOpen={isOpen}>
+            <SidebarNode isOpen={isOpen} onPress={() => linkTo('/admin/users')}>
                 <FeatherIcons name='user' size={25} />
                 <SidebarNodeText isOpen={isOpen}>Usuários</SidebarNodeText>
             </SidebarNode>

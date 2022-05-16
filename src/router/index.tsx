@@ -4,7 +4,8 @@
     screens: {
       Home: '',
       Admin: 'admin',
-      Dashboard: 'admin/dashboard'
+      Dashboard: 'admin/dashboard',
+      Users: 'admin/users'
     }
   },
 };

@@ -11,8 +11,7 @@ interface Config {
       uid: string,
       client: string,
     }
-  }
-
+}
 
 export default {
     async login(Data: FormData) {
@@ -22,6 +21,11 @@ export default {
 
     async logout(Data: Config) {
         const response = await api.delete('api/auth/sign_out', Data);
+        return response;
+    },
+
+    async showUsers(Data: Config){
+        const response = await api.get('api/users', Data);
         return response;
     }
 }
