@@ -11,6 +11,8 @@ import axios from "axios";
 
 import UserServices from '../../services/UserServices';
 
+import { getAuthenticationHeader } from '../../utils/utils';
+
 interface SidebarProp{
     func: any;
 }
@@ -18,17 +20,9 @@ interface SidebarProp{
 const Sidebar = ({func} :SidebarProp) => {
     const linkTo = useLinkTo();
     const [isOpen, setIsOpen] = useState(true);
+
     const handleSignOut = async () => {
-      const value = await AsyncStorage.getItem('@user')
-      const userData = JSON.parse(value)
-      const config = {
-        headers: {
-          'access-token': userData.token,
-          uid: userData.uid,
-          client:userData.client
-        }
-      }
-      UserServices.logout(config).then(() => {
+      UserServices.logout().then(() => {
         linkTo('/admin')
       })
       .catch(error => {
