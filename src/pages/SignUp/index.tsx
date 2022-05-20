@@ -1,162 +1,189 @@
-import React, { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import MenuItem from '@mui/material/MenuItem';
+import React, { useState } from "react";
+import { SafeAreaView, View, Text, TouchableOpacity, Image, Platform } from "react-native";
+import { useForm, Controller } from "react-hook-form";
+import { TextInput } from 'react-native-paper';
+import { style } from '../../globalStyles';
+import axios from "axios";
+import { Link, useLinkTo } from "@react-navigation/native";
+import { SignInView, SignInTitleView, Title, InputView, ForgotPasswordView, ForgotPassword, SubmitButton } from '../SignIn/styles'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import UserService from '../../services/UserServices/index';
+import Dropdown from "../../components/Dropdown";
+import Sidebar from "../../components/Sidebar";
+import { DashboardView } from "../Dashboard/styles";
+
+interface FormData {
+    name: string;
+    email: string;
+    role: string;
+}
+
+const textInputStyle = {
+    fontSize: 16,
+    borderColor: style.colors.black,
+    color: style.colors.black,
+    backgroundColor: style.colors.white,
+}
+
+const textInputTheme = {
+    roundness: +style.borderRadius.slice(0, 2)
+}
 
 function Copyright(props: any) {
     return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+        <Text>
             {'Copyright © '}
-            <Link color="inherit" href="https://museucomputacao.github.io/">
+            <Link to="/" style={{ color: `${style.colors.primary}`, textDecorationLine: 'underline', textDecorationColor: `${style.colors.primary}` }}>
                 Museu da computação UFRJ
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
-        </Typography>
+        </Text>
     );
 }
 
-const roles = [
-    { value: 'curator' }, { value: 'editor' }, { value: 'cataloger' }, { value: 'master' }, 
-];
+const SignIn = () => {
 
-const theme = createTheme();
+    const { control, handleSubmit, formState: { errors, isValid } } = useForm({ mode: "onSubmit" });
+    const [securePassword, setSecurePassword] = useState(true);
+    const linkTo = useLinkTo();
 
-export default function SignUp() {
-    const [role, setRole] = useState('curator');
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
-
-    const handleChange = (event: any) => {
-        setRole(event.target.value);
+    const [isOpen, setIsOpen] = useState<boolean>(true);
+    function getIsOpenProp(getIsOpen: boolean) {
+        setIsOpen(getIsOpen);
+    }
+    const onSubmit = async (data: FormData) => {
+        UserService.createUser(data).then(response => {
+            const user = {
+                token: response.headers['access-token'],
+                uid: response.headers.uid,
+                client: response.headers.client,
+                role: response.data.data.role,
+                email: response.data.data.email
+            }
+            console.log('Response: ', user)
+            AsyncStorage.setItem('@user', JSON.stringify(user))
+            linkTo('/admin/dashboard')
+        })
+            .then(async () => {
+                const value = await AsyncStorage.getItem('@user')
+                console.log(value)
+            })
+            .catch(error => {
+                console.log(error)
+            });
     };
 
     return (
-        <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <Box
-                    sx={{
-                        marginTop: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Cadastro
-                    </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    autoComplete="given-name"
-                                    name="firstName"
-                                    required
-                                    fullWidth
-                                    id="firstName"
-                                    label="Nome"
-                                    autoFocus
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    required
-                                    select
-                                    fullWidth
-                                    value={role}
-                                    onChange={handleChange}
-                                    id="role"
-                                    label="Role"
-                                    name="role"
-                                >
-                                    {roles.map((option: any) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.value}
-                                        </MenuItem>
-                                    ))}
-                                    </TextField>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email"
-                                    name="email"
-                                    autoComplete="email"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Senha"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="new-password"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Confirmar senha"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="new-password"
-                                />
-                            </Grid>
-                            {/* <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
-                                />
-                            </Grid> */}
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                        >
-                            Cadastrar 
-                        </Button>
-                        <Grid container justifyContent="flex-end">
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    Já tem uma conta? Faça login
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Box>
-                <Copyright sx={{ mt: 5 }} />
-            </Container>
-        </ThemeProvider>
-    );
+        <View style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
+            <Sidebar func={getIsOpenProp} />
+            <DashboardView isOpen={isOpen}>
+
+
+                <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
+                    <SignInView>
+                        <SignInTitleView>
+                            <Image
+                                style={{ width: 100, height: 75 }}
+                                source={require('../../../assets/museu-icon.png')}
+                            />
+                            <Title>Cadastro</Title>
+                        </SignInTitleView>
+
+                        <InputView>
+                            <Controller
+                                control={control}
+                                name="name"
+                                defaultValue=""
+                                render={({ field: { onBlur, onChange, value } }) => (
+                                    <TextInput
+                                        autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
+                                        error={errors.name}
+                                        mode="outlined"
+                                        activeOutlineColor={style.colors.primary}
+                                        value={value}
+                                        onBlur={onBlur}
+                                        onChangeText={(value: any) => onChange(value)}
+                                        style={textInputStyle}
+                                        theme={textInputTheme}
+                                        outlineColor={style.colors.black}
+                                        label="Nome*"
+                                    />
+                                )}
+                                rules={{
+                                    required: "O nome é obrigatório",
+                                }}
+                            />
+                            {errors.name && <Text style={{ color: 'red' }}>{errors.name.message}</Text>}
+                        </InputView>
+
+                        <InputView>
+                            <Controller
+                                control={control}
+                                name="email"
+                                defaultValue=""
+                                render={({ field: { onBlur, onChange, value } }) => (
+                                    <TextInput
+                                        autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
+                                        error={errors.email}
+                                        mode="outlined"
+                                        activeOutlineColor={style.colors.primary}
+                                        keyboardType="email-address"
+                                        value={value}
+                                        onBlur={onBlur}
+                                        onChangeText={(value: any) => onChange(value)}
+                                        style={textInputStyle}
+                                        theme={textInputTheme}
+                                        outlineColor={style.colors.black}
+                                        label="E-mail*"
+                                        placeholder="email@exemplo.com"
+                                    />
+                                )}
+                                rules={{
+                                    required: "O e-mail é obrigatório.",
+                                    pattern: {
+                                        value: /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/i,
+                                        message: "Formato de e-mail inválido.",
+                                    },
+                                }}
+                            />
+                            {errors.email && <Text style={{ color: 'red' }}>{errors.email.message}</Text>}
+                        </InputView>
+
+                        <InputView>
+                            <Controller
+                                control={control}
+                                name="role"
+                                defaultValue=""
+                                render={({ field: { onBlur, onChange, value } }) => (
+                                    <Dropdown
+                                        value={value}
+                                        onValueChange={(value: any) => onChange(value)}
+                                        items={[
+                                            { label: "Curador", value: "curator" },
+                                            { label: "Editor", value: "editor" },
+                                            { label: "Catalogador", value: "cataloger" },
+                                            { label: "Mestre", value: "master" },
+                                        ]}
+                                    />
+                                )}
+                                rules={{
+                                    required: "O cargo é obrigatório",
+                                }}
+                            />
+                            {errors.role && <Text style={{ color: 'red' }}>{errors.role.message}</Text>}
+                        </InputView>
+
+                        <SubmitButton onPress={handleSubmit(onSubmit)}>
+                            <Text style={{ color: `${style.colors.white}`, fontSize: '16px' }}>Criar novo usuário</Text>
+                        </SubmitButton>
+                    </SignInView>
+                    <Copyright />
+                </SafeAreaView>
+            </DashboardView>
+        </View>
+    )
 }
+
+export default SignIn;

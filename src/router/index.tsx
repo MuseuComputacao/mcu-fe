@@ -5,7 +5,8 @@
       Home: '',
       Admin: 'admin',
       Dashboard: 'admin/dashboard',
-      Users: 'admin/users'
+      Users: 'admin/users',
+      AddUsers: 'admin/users/add'
     }
   },
 };
