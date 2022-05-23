@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, View, Text, TouchableOpacity, Image, Platform } from "react-native";
+import { SafeAreaView, View, Text, Platform } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from 'react-native-paper';
 import { style } from '../../globalStyles';
-import axios from "axios";
 import { Link, useLinkTo } from "@react-navigation/native";
-import { SignInView, SignInTitleView, Title, InputView, ForgotPasswordView, ForgotPassword, SubmitButton } from '../SignIn/styles'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SignInView, SignInTitleView, Title, InputView } from '../SignIn/styles';
 
 import UserService from '../../services/UserServices/index';
 import RoleService from "../../services/RoleService";
@@ -147,7 +145,7 @@ const SignIn = () => {
                 <Controller
                     control={control}
                     name="role"
-                    defaultValue="master"
+                    defaultValue={roles[0]}
                     render={({ field: { onBlur, onChange, value } }) => (
                         <Dropdown
                             value={value}
@@ -163,7 +161,6 @@ const SignIn = () => {
             </InputView>
 
             <ButtonsView>
-                {/* <NextButton onPress={() => setCurrentSection(2)}> */}
                 <NextButton onPress={() => checkAndPass()}>
                     <Text style={{ color: 'white' }}>Próximo</Text>
                 </NextButton>
