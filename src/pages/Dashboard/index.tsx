@@ -28,7 +28,7 @@ const Dashboard = () => {
       <View style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
         <Sidebar func={getIsOpenProp}/>
         <DashboardView isOpen={isOpen}>
-         <Text style={{fontSize: '23px', textAlign: 'center'}}>
+         <Text style={{fontSize: 23, textAlign: 'center'}}>
           Olá {user.email} você é um {user.role}.
          </Text>
         </DashboardView>
