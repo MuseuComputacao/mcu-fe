@@ -1,18 +1,15 @@
 import api from '../api';
+import { getAuthenticationHeader } from '../../utils/utils';
 
 interface FormData {
     email: string;
     password: string;
 }
-
-interface Config {
-    headers: {
-      'access-token': string,
-      uid: string,
-      client: string,
-    }
-  }
-
+interface CreateData {
+    name: string;
+    email: string;
+    role: string;
+}
 
 export default {
     async login(Data: FormData) {
@@ -20,8 +17,20 @@ export default {
         return response;
     },
 
-    async logout(Data: Config) {
-        const response = await api.delete('api/auth/sign_out', Data);
+    async logout() {
+        var headers =  await getAuthenticationHeader();
+        const response = await api.delete('api/auth/sign_out', headers);
+        return response;
+    },
+
+    async showUsers(){
+        var headers =  await getAuthenticationHeader();
+        const response = await api.get('api/users', headers);
+        return response;
+    },
+
+    async createUser(Data: CreateData){
+        const response = await api.post('api/auth', Data);
         return response;
     }
 }
