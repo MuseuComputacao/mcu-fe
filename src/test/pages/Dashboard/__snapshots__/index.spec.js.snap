@@ -15,7 +15,10 @@ exports[`<Dashboard /> renders correctly 1`] = `
     style={
       Array [
         Object {
+          "alignItems": "center",
           "backgroundColor": "#18121E",
+          "display": "flex",
+          "flexDirection": "column",
           "height": "100%",
           "paddingBottom": 15,
           "paddingLeft": 15,
@@ -42,6 +45,7 @@ exports[`<Dashboard /> renders correctly 1`] = `
           "marginLeft": "auto",
           "marginRight": 10,
           "opacity": 1,
+          "position": "relative",
         }
       }
     >
@@ -62,6 +66,9 @@ exports[`<Dashboard /> renders correctly 1`] = `
           "alignItems": "center",
           "backgroundColor": "#FFFFFF",
           "borderRadius": 10,
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
           "marginTop": 10,
           "opacity": 1,
           "paddingBottom": 10,
@@ -78,6 +85,7 @@ exports[`<Dashboard /> renders correctly 1`] = `
         style={
           Array [
             Object {
+              "display": "flex",
               "marginLeft": 10,
             },
           ]
@@ -101,6 +109,9 @@ exports[`<Dashboard /> renders correctly 1`] = `
           "alignItems": "center",
           "backgroundColor": "#FFFFFF",
           "borderRadius": 10,
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
           "marginTop": 10,
           "opacity": 1,
           "paddingBottom": 10,
@@ -117,6 +128,7 @@ exports[`<Dashboard /> renders correctly 1`] = `
         style={
           Array [
             Object {
+              "display": "flex",
               "marginLeft": 10,
             },
           ]
@@ -140,6 +152,9 @@ exports[`<Dashboard /> renders correctly 1`] = `
           "alignItems": "center",
           "backgroundColor": "#FFFFFF",
           "borderRadius": 10,
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
           "marginTop": 10,
           "opacity": 1,
           "paddingBottom": 10,
@@ -156,6 +171,7 @@ exports[`<Dashboard /> renders correctly 1`] = `
         style={
           Array [
             Object {
+              "display": "flex",
               "marginLeft": 10,
             },
           ]
@@ -179,6 +195,9 @@ exports[`<Dashboard /> renders correctly 1`] = `
           "alignItems": "center",
           "backgroundColor": "#FFFFFF",
           "borderRadius": 10,
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
           "marginTop": 10,
           "opacity": 1,
           "paddingBottom": 10,
@@ -195,6 +214,7 @@ exports[`<Dashboard /> renders correctly 1`] = `
         style={
           Array [
             Object {
+              "display": "flex",
               "marginLeft": 10,
             },
           ]
