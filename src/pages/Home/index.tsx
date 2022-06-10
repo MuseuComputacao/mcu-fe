@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Button } from 'react-native';
+import { View } from 'react-native';
 
 const Home = (props: any) => {
     return (

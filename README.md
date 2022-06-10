@@ -12,6 +12,7 @@ Table of contents
 
   * [Install](#install)
   * [Usage](#usage)
+  * [Test](#test)
   * [Git Guideline](#git-guideline)
 
 ## Install
@@ -29,6 +30,15 @@ The application will become available at the URL:
 
 ```
 http://localhost:19006/
+```
+
+## Test 
+
+We use for test the [jest](https://jestjs.io/docs/getting-started) framework. The code could be found on `src/test` an run with: 
+
+```bash 
+yarn test 
+
 ```
 
 ## Git Guideline

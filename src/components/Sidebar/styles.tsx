@@ -28,10 +28,6 @@ export const SidebarNode = styled.TouchableOpacity`
     width: ${props => props.isOpen ? "90%" : "80%"};
     background-color: ${style.colors.white};
     border-radius: 10px;
-
-    &:hover{
-        background-color: ${style.colors.primary};
-    }
 `;
 
 export const SidebarNodeText = styled.Text`
