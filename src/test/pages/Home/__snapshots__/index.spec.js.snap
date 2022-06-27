@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Home /> renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "height": "100vh",
+      "width": "100%",
+    }
+  }
+>
+  <iframe
+    frameBorder={0}
+    height="100%"
+    src="https://museucomputacao.github.io"
+    width="100%"
+  />
+</View>
+`;

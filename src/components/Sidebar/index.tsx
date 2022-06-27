@@ -6,12 +6,8 @@ import { SidebarBackground, SidebarSandwichIcon, SidebarNode, SidebarNodeText } 
 import FeatherIcons from 'react-native-vector-icons/Feather'
 import { style } from '../../globalStyles';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from "axios";
-
 import UserServices from '../../services/UserServices';
 
-import { getAuthenticationHeader } from '../../utils/utils';
 
 interface SidebarProp{
     func: any;
