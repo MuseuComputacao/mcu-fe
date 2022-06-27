@@ -10,6 +10,7 @@ export default function App() {
   return (
     <NavigationContainer linking={routes}>
       <Stack.Navigator>
+        <Stack.Screen name="NotFound" component={screen.NotFound} options={{ headerShown: false }} />
         <Stack.Screen name="Home" component={screen.Home} options={{ headerShown: false }} />
         <Stack.Screen name="Admin" component={screen.SignIn} options={{ headerShown: false }}  />
         <Stack.Screen name="Dashboard" component={screen.Dashboard} options={{ headerShown: false }} />
