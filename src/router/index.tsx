@@ -7,6 +7,7 @@
       Dashboard: 'admin/dashboard',
       Users: 'admin/users',
       AddUsers: 'admin/users/add',
+      Items: 'admin/items',
       NotFound: '*'
     }
   },
