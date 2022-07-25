@@ -44,7 +44,6 @@ const SignIn = () => {
     const linkTo = useLinkTo();
 
     const onSubmit = (data: FormData) => {
-        console.log(Auth.signed);
         UserService.login(data).then(response => {
             const user = {
                 token: response.headers['access-token'],
@@ -57,7 +56,6 @@ const SignIn = () => {
             AsyncStorage.setItem('@user', JSON.stringify(user))
             AsyncStorage.setItem('token', user.token)
         }).then(() => {
-            console.log(Auth.signed);
             linkTo('/admin/dashboard')
         })
             .catch(error => {

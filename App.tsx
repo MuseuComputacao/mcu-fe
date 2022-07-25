@@ -45,8 +45,7 @@ export default function App() {
   }, [authorization, checkLogIn]);
 
   return (
-    <AuthContext.Provider value={{ token: authorization, setToken: setAuthorization, signed: checkLogIn }}>
-        <NavigationContainer linking={routes}>
+    <NavigationContainer linking={routes}>
         <Stack.Navigator>
           <Stack.Screen name="NotFound" component={screen.NotFound} options={{ headerShown: false }} />
           <Stack.Screen name="Home" component={checkLogIn ? screen.Home : screen.SignIn} options={{ headerShown: false }} />
@@ -56,6 +55,5 @@ export default function App() {
           <Stack.Screen name="AddUsers" component={screen.SignUp} options={{ headerShown: false }} />
         </Stack.Navigator>
     </NavigationContainer>
-    </AuthContext.Provider>
   )
 }
