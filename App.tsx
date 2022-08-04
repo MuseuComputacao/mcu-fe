@@ -17,6 +17,7 @@ export default function App() {
         <Stack.Screen name="Users" component={screen.Users} options={{ headerShown: false }} />
         <Stack.Screen name="AddUsers" component={screen.SignUp} options={{ headerShown: false }} />
         <Stack.Screen name="Items" component={screen.Items} options={{ headerShown: false }} />
+        <Stack.Screen name="AddItems" component={screen.AddItems} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
