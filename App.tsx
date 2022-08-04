@@ -52,7 +52,7 @@ export default function App() {
           <Stack.Screen name="Admin" component={screen.SignIn} options={{ headerShown: false }}  />
           <Stack.Screen name="Dashboard" component={checkLogIn ? screen.Dashboard : screen.SignIn} options={{ headerShown: false }} />
           <Stack.Screen name="Users" component={checkLogIn ? screen.Users : screen.SignIn} options={{ headerShown: false }} />
-          <Stack.Screen name="AddUsers" component={screen.SignUp} options={{ headerShown: false }} />
+          <Stack.Screen name="AddUsers" component={checkLogIn ? screen.SignUp : screen.SignIn} options={{ headerShown: false }} />
         </Stack.Navigator>
     </NavigationContainer>
   )
