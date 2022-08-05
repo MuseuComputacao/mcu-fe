@@ -1,5 +1,6 @@
 import api from '../api';
 import { getAuthenticationHeader } from '../../utils/utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface FormData {
     email: string;
@@ -20,6 +21,7 @@ export default {
     async logout() {
         var headers =  await getAuthenticationHeader();
         const response = await api.delete('api/auth/sign_out', headers);
+        await AsyncStorage.clear()
         return response;
     },
 
