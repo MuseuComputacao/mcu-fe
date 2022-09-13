@@ -32,5 +32,11 @@ export default {
     async createUser(Data: CreateData){
         const response = await api.post('api/auth', Data);
         return response;
+    },
+
+    async deleteUser(id: number){
+        var headers =  await getAuthenticationHeader();
+        const response = await api.delete(`api/users/?id=${id}`, headers);
+        return response;
     }
 }

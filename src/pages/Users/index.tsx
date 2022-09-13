@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import Sidebar from "../../components/Sidebar";
 import { DashboardView } from "../Dashboard/styles";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,6 +10,7 @@ import { useLinkTo } from '@react-navigation/native';
 
 const Users = () => {
     const [isOpen, setIsOpen] = useState<boolean>(true);
+    const [reload, setReload] = useState<boolean>(false);
     const [users, setUsers] = useState<any[]>([]);
     const [hasLoadedUsers, setHasLoadedUsers] = useState(false);
     const numberOfItemsPerPageList = [2, 3, 4];
@@ -27,6 +28,24 @@ const Users = () => {
     function getIsOpenProp(getIsOpen: boolean) {
         setIsOpen(getIsOpen);
     }
+
+    function handleDelete(id: number){
+        UserServices.deleteUser(id).then(response => {
+            //adicionar modal de confirmação e chamar handleConfirm dentro dele
+            handleConfirm();
+        })
+    }
+
+    function handleConfirm(){
+        setUsers([]);
+        setHasLoadedUsers(false);
+        setReload(true);
+    }
+
+    useEffect(() => {
+        getUsers();
+    },[reload])
+
 
     async function getUsers() {
         UserServices.showUsers().then(response => {
@@ -76,7 +95,11 @@ const Users = () => {
                                 <DataTable.Row key={index}>
                                     <DataTable.Cell> {user.name} </DataTable.Cell>
                                     <DataTable.Cell> {user.role} </DataTable.Cell>
-                                    <DataTable.Cell style={{ display: 'flex', flexDirection: 'row-reverse' }}> <FeatherIcons name='trash' /> </DataTable.Cell>
+                                    <DataTable.Cell style={{ display: 'flex', flexDirection: 'row-reverse' }}> 
+                                    <TouchableOpacity onPress={() => handleDelete(user.id)}>
+                                        <FeatherIcons name='trash' /> 
+                                    </TouchableOpacity>
+                                    </DataTable.Cell>
                                 </DataTable.Row>
                             )
                         })}
