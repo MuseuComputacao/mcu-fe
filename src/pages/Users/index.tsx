@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Modal } from "react-native";
 import Sidebar from "../../components/Sidebar";
 import { DashboardView } from "../Dashboard/styles";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserServices from '../../services/UserServices';
-import { DataTable } from 'react-native-paper';
+import { DataTable, Dialog, Portal } from 'react-native-paper';
 import FeatherIcons from 'react-native-vector-icons/Feather'
 import { useLinkTo } from '@react-navigation/native';
 
 const Users = () => {
     const [isOpen, setIsOpen] = useState<boolean>(true);
+    const [reload, setReload] = useState<boolean>(false);
+    const [alertVisibility, setAlertVisibility] = React.useState(false);
     const [users, setUsers] = useState<any[]>([]);
     const [hasLoadedUsers, setHasLoadedUsers] = useState(false);
     const numberOfItemsPerPageList = [2, 3, 4];
@@ -17,6 +19,7 @@ const Users = () => {
 
     const [page, setPage] = useState(0);
     const [numberOfItemsPerPage, onItemsPerPageChange] = useState(1);
+    const [userId, setUserId] = useState(0);
     const from = page * numberOfItemsPerPage;
     const to = Math.min((page + 1) * numberOfItemsPerPage, users.length);
 
@@ -27,6 +30,29 @@ const Users = () => {
     function getIsOpenProp(getIsOpen: boolean) {
         setIsOpen(getIsOpen);
     }
+
+    function handleDelete(id: number){
+        setAlertVisibility(true);
+        setUserId(id);
+    }
+
+    function handleConfirm(){
+        UserServices.deleteUser(userId).then(response => {
+            setAlertVisibility(false);
+            setUsers([]);
+            setHasLoadedUsers(false);
+            setReload(true);
+        })
+    }
+
+    function hideDialog(){
+        setAlertVisibility(false);
+    }
+
+    useEffect(() => {
+        getUsers();
+    },[reload])
+
 
     async function getUsers() {
         UserServices.showUsers().then(response => {
@@ -76,7 +102,11 @@ const Users = () => {
                                 <DataTable.Row key={index}>
                                     <DataTable.Cell> {user.name} </DataTable.Cell>
                                     <DataTable.Cell> {user.role} </DataTable.Cell>
-                                    <DataTable.Cell style={{ display: 'flex', flexDirection: 'row-reverse' }}> <FeatherIcons name='trash' /> </DataTable.Cell>
+                                    <DataTable.Cell style={{ display: 'flex', flexDirection: 'row-reverse' }}> 
+                                    <TouchableOpacity onPress={() => handleDelete(user.id)}>
+                                        <FeatherIcons name='trash' /> 
+                                    </TouchableOpacity>
+                                    </DataTable.Cell>
                                 </DataTable.Row>
                             )
                         })}
@@ -95,6 +125,32 @@ const Users = () => {
                     </DataTable>
                 </View>
             </DashboardView>
+            
+            <Portal.Host>
+                <Portal>
+                    <Dialog visible={alertVisibility} onDismiss={hideDialog}>
+                        <Dialog.Content>
+                            <Text>
+                                Tem certeza que deseja apagar este produto?
+                            </Text>
+
+                            <View>
+                                <TouchableOpacity style={{backgroundColor: 'red'}}
+                                    onPress={() => handleConfirm()}>
+                                    Sim. Apagar produto
+                                </TouchableOpacity>
+                                <View style={{ marginTop: 15 }}>
+                                    <TouchableOpacity
+                                        onPress={hideDialog}>
+                                        Não
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+
+                        </Dialog.Content>
+                    </Dialog>
+                </Portal>
+            </Portal.Host>
         </View >
     )
 }
