@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, TouchableOpacity, Image, Platform } from "react-native";
+import { SafeAreaView, Text, TouchableOpacity, Image, Platform } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from 'react-native-paper';
 import { style } from '../../globalStyles';
-import axios from "axios";
 import { Link, useLinkTo } from "@react-navigation/native";
 import { SignInView, SignInTitleView, Title, InputView, ForgotPasswordView, ForgotPassword, SubmitButton } from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -40,12 +39,11 @@ function Copyright(props: any) {
 }
 
 const SignIn = () => {
-
     const { control, handleSubmit, formState: { errors, isValid } } = useForm({ mode: "onSubmit" });
     const [securePassword, setSecurePassword] = useState(true);
     const linkTo = useLinkTo();
 
-    const onSubmit = async (data: FormData) => {
+    const onSubmit = (data: FormData) => {
         UserService.login(data).then(response => {
             const user = {
                 token: response.headers['access-token'],
@@ -64,10 +62,6 @@ const SignIn = () => {
                 linkTo('/admin/dashboard');
             }
         })
-            .then(async () => {
-                const value = await AsyncStorage.getItem('@user')
-                console.log(value)
-            })
             .catch(error => {
                 console.log(error)
             });
