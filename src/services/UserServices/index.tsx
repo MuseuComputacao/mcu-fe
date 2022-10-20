@@ -6,6 +6,16 @@ interface FormData {
     email: string;
     password: string;
 }
+
+interface FirstLoginData {
+    first_login: boolean;
+}
+
+interface PasswordData {
+    current_password: string;
+    password: string;
+    password_confirmation: string;
+  }
 interface CreateData {
     name: string;
     email: string;
@@ -33,6 +43,24 @@ export default {
 
     async createUser(Data: CreateData){
         const response = await api.post('api/auth', Data);
+        return response;
+    },
+
+    async deleteUser(id: number){
+        var headers =  await getAuthenticationHeader();
+        const response = await api.delete(`api/users/?id=${id}`, headers);
+        return response;
+    },
+
+    async resetPassword(Data: PasswordData){
+        var headers =  await getAuthenticationHeader();
+        const response = await api.put('api/auth', Data, headers);
+        return response;
+    },
+
+    async updateUser(Data: FirstLoginData){
+        var headers =  await getAuthenticationHeader();
+        const response = await api.put('api/auth', Data, headers);
         return response;
     }
 }

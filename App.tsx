@@ -45,14 +45,15 @@ export default function App() {
 
   return (
     <NavigationContainer linking={routes}>
-        <Stack.Navigator>
-          <Stack.Screen name="NotFound" component={screen.NotFound} options={{ headerShown: false }} />
-          <Stack.Screen name="Home" component={checkLogIn ? screen.Home : screen.SignIn} options={{ headerShown: false }} />
-          <Stack.Screen name="Admin" component={screen.SignIn} options={{ headerShown: false }}  />
-          <Stack.Screen name="Dashboard" component={checkLogIn ? screen.Dashboard : screen.SignIn} options={{ headerShown: false }} />
-          <Stack.Screen name="Users" component={checkLogIn ? screen.Users : screen.SignIn} options={{ headerShown: false }} />
-          <Stack.Screen name="AddUsers" component={checkLogIn ? screen.SignUp : screen.SignIn} options={{ headerShown: false }} />
-        </Stack.Navigator>
+      <Stack.Navigator>
+        <Stack.Screen name="NotFound" component={screen.NotFound} options={{ headerShown: false }} />
+        <Stack.Screen name="Home" component={screen.Home} options={{ headerShown: false }} />
+        <Stack.Screen name="Admin" component={screen.SignIn} options={{ headerShown: false }}  />
+        <Stack.Screen name="Dashboard" component={screen.Dashboard} options={{ headerShown: false }} />
+        <Stack.Screen name="Users" component={screen.Users} options={{ headerShown: false }} />
+        <Stack.Screen name="AddUsers" component={screen.SignUp} options={{ headerShown: false }} />
+        <Stack.Screen name="AddItems" component={screen.AddItems} options={{ headerShown: false }} />
+        <Stack.Screen name="ResetPassword" component={screen.ChangePassword} options={{ headerShown: false }} />
+      </Stack.Navigator>
     </NavigationContainer>
-  )
 }

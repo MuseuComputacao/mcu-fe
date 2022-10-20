@@ -51,6 +51,11 @@ const Sidebar = ({func} :SidebarProp) => {
                 <SidebarNodeText isOpen={isOpen}>Usuários</SidebarNodeText>
             </SidebarNode>
 
+            <SidebarNode isOpen={isOpen} onPress={() => linkTo('/admin/items')}>
+                <FeatherIcons name='monitor' size={25} />
+                <SidebarNodeText isOpen={isOpen}>Items</SidebarNodeText>
+            </SidebarNode>
+
             <SidebarNode isOpen={isOpen} onPress={handleSignOut}>
                 <FeatherIcons name='log-out' size={25} />
                 <SidebarNodeText isOpen={isOpen}>Sair</SidebarNodeText>
