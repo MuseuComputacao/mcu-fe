@@ -20,6 +20,7 @@ const Dashboard = () => {
 
   const handleUserData = async () => {
     const userData =  await AsyncStorage.getItem('@user')
+    console.log(userData)
     setUser(JSON.parse(userData))
   }
 
@@ -27,8 +28,10 @@ const Dashboard = () => {
       <View style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
         <Sidebar func={getIsOpenProp}/>
         <DashboardView isOpen={isOpen}>
-         <Text style={{fontSize: '23px', textAlign: 'center'}}>
-          Olá {user.email} você é um {user.role}.
+         <Text style={{fontSize: '23px', textAlign: 'left', margin: '50px', lineHeight: '1.6em'}}>
+          Olá, <br/>
+          <strong>{user.name}</strong> bem vindo ao admin do museu da computação da UFRJ. <br/>
+          ❤ 🤖 ❤
          </Text>
         </DashboardView>
       </View>

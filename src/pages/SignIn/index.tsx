@@ -50,7 +50,8 @@ const SignIn = () => {
                 uid: response.headers.uid,
                 client: response.headers.client,
                 role: response.data.data.role,
-                email: response.data.data.email
+                email: response.data.data.email,
+                name: response.data.data.name
             }
             console.log('Response: ', user)
             AsyncStorage.setItem('@user', JSON.stringify(user))

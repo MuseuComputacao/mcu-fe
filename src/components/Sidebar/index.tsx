@@ -41,11 +41,6 @@ const Sidebar = ({func} :SidebarProp) => {
                 <SidebarNodeText isOpen={isOpen}>Dashboard</SidebarNodeText>
             </SidebarNode>
 
-            <SidebarNode isOpen={isOpen}>
-                <FeatherIcons name='pie-chart' size={25} />
-                <SidebarNodeText isOpen={isOpen}>Gráficos</SidebarNodeText>
-            </SidebarNode>
-
             <SidebarNode isOpen={isOpen} onPress={() => linkTo('/admin/users')}>
                 <FeatherIcons name='user' size={25} />
                 <SidebarNodeText isOpen={isOpen}>Usuários</SidebarNodeText>

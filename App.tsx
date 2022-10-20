@@ -8,41 +8,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [authorization, setAuthorization] = useState('');
-  const [checkLogIn, setCheckLogIn] = useState(true);
-
-  const userToken = async () => {
-      try {
-          let token = '';
-          const verifyToken = await AsyncStorage.getItem('token');
-          if (verifyToken != null) {
-              return verifyToken;
-          }else{
-              return token;
-          }
-      } catch (e) {
-          console.log('sem token');
-      }
-  };
-
-  function checkIsLoggedIn(){
-      if(authorization !== ''){
-          setCheckLogIn(true);
-      }else{
-          setCheckLogIn(false);
-      }
-  }
-
-  useEffect(() => {
-      userToken().then(token => {
-          setAuthorization(token)
-      });
-  }, []);
-
-  useEffect(() => {
-      checkIsLoggedIn();
-  }, [authorization, checkLogIn]);
-
   return (
     <NavigationContainer linking={routes}>
       <Stack.Navigator>
@@ -52,8 +17,10 @@ export default function App() {
         <Stack.Screen name="Dashboard" component={screen.Dashboard} options={{ headerShown: false }} />
         <Stack.Screen name="Users" component={screen.Users} options={{ headerShown: false }} />
         <Stack.Screen name="AddUsers" component={screen.SignUp} options={{ headerShown: false }} />
+        <Stack.Screen name="Items" component={screen.Items} options={{ headerShown: false }} />
         <Stack.Screen name="AddItems" component={screen.AddItems} options={{ headerShown: false }} />
         <Stack.Screen name="ResetPassword" component={screen.ChangePassword} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
+  )
 }
