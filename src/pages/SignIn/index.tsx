@@ -56,7 +56,13 @@ const SignIn = () => {
             }
             console.log('Response: ', user)
             AsyncStorage.setItem('@user', JSON.stringify(user))
-            linkTo('/admin/dashboard')
+            console.log(response);
+            if(response.data.data.first_login){
+                linkTo('/admin/reset-password');
+            }
+            else{
+                linkTo('/admin/dashboard');
+            }
         })
             .then(async () => {
                 const value = await AsyncStorage.getItem('@user')

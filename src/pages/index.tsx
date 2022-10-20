@@ -6,6 +6,7 @@ import Users from './Users'
 import NotFound  from './NotFound';
 import Items from './Items'
 import AddItems from './RegisterItem'
+import ChangePassword from './ChangePassword';
 
  export {
   NotFound,
@@ -15,5 +16,6 @@ import AddItems from './RegisterItem'
   Dashboard,
   Users,
   Items,
-  AddItems
+  AddItems,
+  ChangePassword,
 }
