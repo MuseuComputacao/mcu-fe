@@ -16,6 +16,7 @@ export default function App() {
         <Stack.Screen name="Dashboard" component={screen.Dashboard} options={{ headerShown: false }} />
         <Stack.Screen name="Users" component={screen.Users} options={{ headerShown: false }} />
         <Stack.Screen name="AddUsers" component={screen.SignUp} options={{ headerShown: false }} />
+        <Stack.Screen name="ResetPassword" component={screen.ChangePassword} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

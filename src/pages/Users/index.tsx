@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Modal } from "react-native";
 import Sidebar from "../../components/Sidebar";
 import { DashboardView } from "../Dashboard/styles";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserServices from '../../services/UserServices';
-import { DataTable } from 'react-native-paper';
+import { DataTable, Dialog, Portal } from 'react-native-paper';
 import FeatherIcons from 'react-native-vector-icons/Feather'
 import { useLinkTo } from '@react-navigation/native';
 
 const Users = () => {
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const [reload, setReload] = useState<boolean>(false);
+    const [alertVisibility, setAlertVisibility] = React.useState(false);
     const [users, setUsers] = useState<any[]>([]);
     const [hasLoadedUsers, setHasLoadedUsers] = useState(false);
     const numberOfItemsPerPageList = [2, 3, 4];
@@ -18,6 +19,7 @@ const Users = () => {
 
     const [page, setPage] = useState(0);
     const [numberOfItemsPerPage, onItemsPerPageChange] = useState(1);
+    const [userId, setUserId] = useState(0);
     const from = page * numberOfItemsPerPage;
     const to = Math.min((page + 1) * numberOfItemsPerPage, users.length);
 
@@ -30,16 +32,21 @@ const Users = () => {
     }
 
     function handleDelete(id: number){
-        UserServices.deleteUser(id).then(response => {
-            //adicionar modal de confirmação e chamar handleConfirm dentro dele
-            handleConfirm();
-        })
+        setAlertVisibility(true);
+        setUserId(id);
     }
 
     function handleConfirm(){
-        setUsers([]);
-        setHasLoadedUsers(false);
-        setReload(true);
+        UserServices.deleteUser(userId).then(response => {
+            setAlertVisibility(false);
+            setUsers([]);
+            setHasLoadedUsers(false);
+            setReload(true);
+        })
+    }
+
+    function hideDialog(){
+        setAlertVisibility(false);
     }
 
     useEffect(() => {
@@ -118,6 +125,32 @@ const Users = () => {
                     </DataTable>
                 </View>
             </DashboardView>
+            
+            <Portal.Host>
+                <Portal>
+                    <Dialog visible={alertVisibility} onDismiss={hideDialog}>
+                        <Dialog.Content>
+                            <Text>
+                                Tem certeza que deseja apagar este produto?
+                            </Text>
+
+                            <View>
+                                <TouchableOpacity style={{backgroundColor: 'red'}}
+                                    onPress={() => handleConfirm()}>
+                                    Sim. Apagar produto
+                                </TouchableOpacity>
+                                <View style={{ marginTop: 15 }}>
+                                    <TouchableOpacity
+                                        onPress={hideDialog}>
+                                        Não
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+
+                        </Dialog.Content>
+                    </Dialog>
+                </Portal>
+            </Portal.Host>
         </View >
     )
 }

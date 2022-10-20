@@ -75,7 +75,7 @@ const SignIn = () => {
                 email: response.data.data.email
             }
             console.log('Response: ', user)
-            linkTo('admin/dashboard')
+            linkTo('/admin/dashboard')
         })
             .catch(error => {
                 console.log(error)
