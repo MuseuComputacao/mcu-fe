@@ -12,6 +12,7 @@ Table of contents
 
   * [Install](#install)
   * [Usage](#usage)
+  * [Important Library](#important-library)
   * [Git Guideline](#git-guideline)
 
 ## Install
@@ -30,6 +31,10 @@ The application will become available at the URL:
 ```
 http://localhost:19006/
 ```
+
+## Important Library 
+
+- [FatherIcons](https://github.com/feathericons/react-feather)
 
 ## Git Guideline
 Create your branch's and commits using english language and fallowing this guideline.

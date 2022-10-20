@@ -8,7 +8,9 @@
       Dashboard: 'admin/dashboard',
       Users: 'admin/users',
       AddUsers: 'admin/users/add',
-      NotFound: '*',
+      Items: 'admin/items',
+      AddItems: 'admin/items/add',
+      NotFound: '*'
     }
   },
 };
