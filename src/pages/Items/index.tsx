@@ -9,7 +9,6 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import FeatherIcons from "react-native-vector-icons/Feather";
 import ItemService from "../../services/ItemService";
 import { useLinkTo } from "@react-navigation/native";
-import { style } from "../../globalStyles";
 
 const Items = (props: any) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
@@ -23,10 +22,10 @@ const Items = (props: any) => {
   async function getItems() {
     ItemService.getItems()
       .then((response) => {
-        setItems(response.data);
+        setItems(response.data || []);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   }
 

@@ -53,9 +53,7 @@ const SignIn = () => {
                 email: response.data.data.email,
                 name: response.data.data.name
             }
-            console.log('Response: ', user)
             AsyncStorage.setItem('@user', JSON.stringify(user))
-            console.log(response);
             if(response.data.data.first_login){
                 linkTo('/admin/reset-password');
             }

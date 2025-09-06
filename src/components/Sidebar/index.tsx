@@ -21,7 +21,7 @@ const Sidebar = ({func} :SidebarProp) => {
         linkTo('/admin')
       })
       .catch(error => {
-          console.log(error)
+          console.error(error)
       });
     }
 

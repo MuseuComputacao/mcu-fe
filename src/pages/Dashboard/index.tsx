@@ -20,7 +20,6 @@ const Dashboard = () => {
 
   const handleUserData = async () => {
     const userData =  await AsyncStorage.getItem('@user')
-    console.log(userData)
     setUser(JSON.parse(userData))
   }
 

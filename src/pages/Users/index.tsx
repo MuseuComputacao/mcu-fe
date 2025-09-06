@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Modal } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import Sidebar from "../../components/Sidebar";
 import { DashboardView } from "../Dashboard/styles";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserServices from '../../services/UserServices';
 import { DataTable, Dialog, Portal } from 'react-native-paper';
 import FeatherIcons from 'react-native-vector-icons/Feather'
@@ -59,7 +58,7 @@ const Users = () => {
             setUsers(response.data);
             setHasLoadedUsers(true);
         }).catch(error => {
-            console.log(error)
+            console.error(error)
         });
     }
 
@@ -131,22 +130,24 @@ const Users = () => {
                     <Dialog visible={alertVisibility} onDismiss={hideDialog}>
                         <Dialog.Content>
                             <Text>
-                                Tem certeza que deseja apagar este produto?
+                                Tem certeza que deseja apagar este Item?
                             </Text>
 
-                            <View>
-                                <TouchableOpacity style={{backgroundColor: 'red'}}
-                                    onPress={() => handleConfirm()}>
-                                    Sim. Apagar produto
+                                 <View                                 
+                                 style={{
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                    marginTop: 10,
+                                }}>
+                                <TouchableOpacity onPress={() => handleConfirm()}>
+                                        Sim
                                 </TouchableOpacity>
                                 <View style={{ marginTop: 15 }}>
-                                    <TouchableOpacity
-                                        onPress={hideDialog}>
+                                    <TouchableOpacity onPress={hideDialog}>
                                         Não
                                     </TouchableOpacity>
                                 </View>
                             </View>
-
                         </Dialog.Content>
                     </Dialog>
                 </Portal>

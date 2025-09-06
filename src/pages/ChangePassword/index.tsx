@@ -65,23 +65,19 @@ const SignIn = () => {
           role: response.data.data.role,
           email: response.data.data.email,
         };
-        // console.log("Response: ", user);
         AsyncStorage.setItem("@user", JSON.stringify(user));
-        // console.log(response);
         if(response.data.status == "success"){
             let first_login = false;
             UserService.updateUser({first_login}).then((response) => {
-                console.log(response);
                 linkTo("/admin/dashboard");
             })
         }
       })
       .then(async () => {
         const value = await AsyncStorage.getItem("@user");
-        console.log(value);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 

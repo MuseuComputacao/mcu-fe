@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  mcu-fe:
+    build:
+      context: .
+    container_name: mcu-fe
+    ports:
+      - "19006:19006"   # Expo web
+    volumes:
+      - .:/app          # Mount source code for live changes
+      - /app/node_modules  # Keep container's node_modules separate
+    environment:
+      - CHOKIDAR_USEPOLLING=true   # Ensures hot reload works inside Docker
+    command: yarn web

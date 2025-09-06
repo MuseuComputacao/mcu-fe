@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -9,7 +9,7 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from "react-native-paper";
 import { style } from "../../globalStyles";
-import { Link, useLinkTo } from "@react-navigation/native";
+import { useLinkTo } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import {
   SignInView,
@@ -18,17 +18,12 @@ import {
   InputView,
   InputView2,
   NextButton,
-  BackButton,
   ButtonsView,
-  SubtitlesView,
-  SubtitlesText,
   ImageContainer,
   ProductImage,
   InputView3,
 } from "./styles";
 
-import { Upload } from "element-react";
-import RoleService from "../../services/RoleService";
 import Sidebar from "../../components/Sidebar";
 import { DashboardView } from "../Dashboard/styles";
 import Ionicon from "react-native-vector-icons/Ionicons";
@@ -68,15 +63,11 @@ const SignIn = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid },
-    watch,
-    getFieldState,
-    getValues,
+    formState: { errors },
     setValue,
-    trigger,
-    clearErrors,
-  } = useForm({ mode: "onSubmit" });
-  const [capturedPhoto, setCapturedPhoto] = useState(null);
+  } = useForm<AddItemFormData>({ mode: "onSubmit" });
+
+  const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null);
   const [hasPhoto, setHasPhoto] = useState(false);
   const linkTo = useLinkTo();
 
@@ -86,26 +77,33 @@ const SignIn = () => {
   }
 
   const onSubmit = async (data: AddItemFormData) => {
-    ItemService.createItem(data).then((response) => {
+    console.log("Form submitted ✅:", data);
+    try {
+      await ItemService.createItem(data);
       linkTo("/admin/items");
-    });
+    } catch (err) {
+      console.error("Error creating item:", err);
+    }
   };
 
-  async function openImagePickerAsyncProduct() {
+  async function openImagePickerAsyncProduct(onChange: (val: string) => void) {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (permissionResult.granted === false) {
-      console.log("acesso negado");
-      return null;
+    if (!permissionResult.granted) {
+      console.error("Permission denied to access gallery");
+      return;
     }
 
-    const result = await ImagePicker.launchImageLibraryAsync();
+    const result = await ImagePicker.launchImageLibraryAsync({
+      base64: true,
+    });
 
-    if (!result.cancelled) {
+    if (!result.cancelled && result.base64) {
       setCapturedPhoto(result.uri);
       setHasPhoto(true);
       setValue("id_photo", result.base64, { shouldValidate: true });
+      onChange(result.base64);
     }
   }
 
@@ -133,14 +131,15 @@ const SignIn = () => {
               <Title>Cadastro</Title>
             </SignInTitleView>
             <View>
-              <SubtitlesText> Informações sobre o item: </SubtitlesText>
+              <Text> Informações sobre o item: </Text>
               <InputView>
                 <Controller
                   control={control}
                   name="id_photo"
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  defaultValue=""
+                  render={({ field: { onChange } }) => (
                     <TouchableOpacity
-                      onPress={() => openImagePickerAsyncProduct()}
+                      onPress={() => openImagePickerAsyncProduct(onChange)}
                     >
                       <ImageContainer>
                         {!hasPhoto && (
@@ -151,7 +150,7 @@ const SignIn = () => {
                             style={{ alignSelf: "center", paddingVertical: 32 }}
                           />
                         )}
-                        {hasPhoto && (
+                        {hasPhoto && capturedPhoto && (
                           <ProductImage
                             style={{ aspectRatio: 3 / 4 }}
                             source={{ uri: capturedPhoto }}
@@ -160,15 +159,10 @@ const SignIn = () => {
                       </ImageContainer>
                     </TouchableOpacity>
                   )}
-                  rules={{
-                    required: "Preencha este campo.",
-                  }}
+                  rules={{ required: "Preencha este campo." }}
                 />
-
                 {errors.id_photo && (
-                  <Text style={{ color: "red" }}>
-                    {errors.id_photo.message}
-                  </Text>
+                  <Text style={{ color: "red" }}>{errors.id_photo.message}</Text>
                 )}
               </InputView>
 
@@ -304,7 +298,7 @@ const SignIn = () => {
                 )}
               </InputView>
 
-              <SubtitlesText> Informações sobre datas: </SubtitlesText>
+              <Text> Informações sobre datas: </Text>
 
               <View
                 style={{
@@ -368,10 +362,10 @@ const SignIn = () => {
                 </InputView3>
               </View>
 
-              <SubtitlesText>
+              <Text>
                 {" "}
                 Informações sobre estado de conservação:{" "}
-              </SubtitlesText>
+              </Text>
 
               <InputView>
                 <Controller
@@ -503,7 +497,7 @@ const SignIn = () => {
                 )}
               </InputView>
 
-              <SubtitlesText> Informações sobre origem do item: </SubtitlesText>
+              <Text> Informações sobre origem do item: </Text>
 
               <View
                 style={{
@@ -606,7 +600,7 @@ const SignIn = () => {
                 </InputView2>
               </View>
 
-              <SubtitlesText> Informações sobre doadores: </SubtitlesText>
+              <Text> Informações sobre doadores: </Text>
 
               <View
                 style={{

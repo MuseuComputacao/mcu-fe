@@ -74,11 +74,10 @@ const SignIn = () => {
                 role: response.data.data.role,
                 email: response.data.data.email
             }
-            console.log('Response: ', user)
             linkTo('/admin/dashboard')
         })
             .catch(error => {
-                console.log(error)
+                console.error(error)
             });
     };
 
@@ -92,7 +91,7 @@ const SignIn = () => {
             })
             setRoles(temp);
         }).catch(response => {
-            console.log(response);
+            console.error(response);
         })
     }, [])
 

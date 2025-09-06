@@ -19,16 +19,22 @@ Table of contents
 
 + Clone the repo and cd into it
 
-Next, use `yarn` to download all dependencies.
+Next, use `yarn` to download all dependencies. Or user `docker-compose build`
 ## Usage
 
-```
+```sh
 yarn web
+```
+
+or 
+
+```sh
+docker-compose up
 ```
 
 The application will become available at the URL:
 
-```
+```sh
 http://localhost:19006/
 ```
 
