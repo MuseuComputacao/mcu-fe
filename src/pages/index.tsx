@@ -7,6 +7,8 @@ import NotFound  from './NotFound';
 import Items from './Items'
 import AddItems from './RegisterItem'
 import ChangePassword from './ChangePassword';
+import About from './About';
+import VirtualTour from './VirtualTour';
 
  export {
   NotFound,
@@ -18,4 +20,6 @@ import ChangePassword from './ChangePassword';
   Items,
   AddItems,
   ChangePassword,
+  About,
+  VirtualTour,
 }

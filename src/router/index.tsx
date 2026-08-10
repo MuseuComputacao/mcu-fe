@@ -3,6 +3,8 @@
   config: {
     screens: {
       Home: '',
+      About: 'about',
+      VirtualTour: 'virtual-tour',
       Admin: 'admin',
       ResetPassword: 'admin/reset-password',
       Dashboard: 'admin/dashboard',
