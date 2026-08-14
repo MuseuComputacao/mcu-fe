@@ -1,8 +1,8 @@
-# Base image with Node.js 16 (compatible with Expo SDK 44)
-FROM node:16
+# Base image pinned to the runtime currently used by the Expo SDK 44 container.
+FROM node:16.20.2
 
-# Install expo-cli globally
-RUN npm install -g expo-cli
+# Expo SDK 44 delegates its CLI entrypoint to the legacy global package.
+RUN npm install -g expo-cli@6.3.10
 
 # Set working directory
 WORKDIR /app
