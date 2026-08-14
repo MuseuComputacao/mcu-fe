@@ -7,6 +7,7 @@
       VirtualTour: 'virtual-tour',
       Posts: 'posts',
       Contact: 'contact',
+      Sponsor: 'sponsor',
       Admin: 'admin',
       ResetPassword: 'admin/reset-password',
       Dashboard: 'admin/dashboard',

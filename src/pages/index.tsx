@@ -11,6 +11,7 @@ import About from './About';
 import VirtualTour from './VirtualTour';
 import Posts from './Posts';
 import Contact from './Contact';
+import Sponsor from './Sponsor';
 
  export {
   NotFound,
@@ -26,4 +27,5 @@ import Contact from './Contact';
   VirtualTour,
   Posts,
   Contact,
+  Sponsor,
 }
