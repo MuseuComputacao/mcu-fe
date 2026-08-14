@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Linking, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Linking, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Link } from '@react-navigation/native';
 
 type PostTag = 'jekyll' | 'curiosidades';
@@ -17,6 +17,9 @@ type Post = {
 // Individual article bodies remain on the documented Jekyll fallback until their
 // editorial migration is authorized and implemented.
 const legacySite = 'https://museucomputacao.github.io';
+
+const normalizeSearchText = (value: string) =>
+  value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
 
 const posts: Post[] = [
   {
@@ -125,9 +128,19 @@ const filters: Array<{ id: PostFilter; label: string }> = [
 
 const Posts = () => {
   const [selectedFilter, setSelectedFilter] = useState<PostFilter>('todos');
-  const visiblePosts = selectedFilter === 'todos'
-    ? posts
-    : posts.filter((post) => post.tag === selectedFilter);
+  const [searchQuery, setSearchQuery] = useState('');
+  const normalizedQuery = normalizeSearchText(searchQuery.trim());
+  const visiblePosts = posts.filter((post) => {
+    const matchesFilter = selectedFilter === 'todos' || post.tag === selectedFilter;
+    const searchableText = normalizeSearchText(
+      `${post.title} ${post.description} ${post.author} ${post.tag}`,
+    );
+
+    return matchesFilter && (!normalizedQuery || searchableText.includes(normalizedQuery));
+  });
+  const emptyStateMessage = normalizedQuery
+    ? 'Nenhum artigo encontrado para esta busca.'
+    : 'Nenhum artigo encontrado para este tema.';
 
   const openLegacyPost = (path: string) => {
     Linking.openURL(`${legacySite}${path}`).catch(() => undefined);
@@ -155,6 +168,19 @@ const Posts = () => {
         <Text style={styles.intro}>
           Explore os artigos e curiosidades publicados pelo Museu da Computação.
         </Text>
+
+        <View style={styles.searchSection}>
+          <Text style={styles.searchLabel}>Buscar artigos</Text>
+          <TextInput
+            accessibilityLabel="Buscar artigos"
+            onChangeText={setSearchQuery}
+            placeholder="Digite título, autor ou tema"
+            placeholderTextColor="#5F5663"
+            returnKeyType="search"
+            style={styles.searchInput}
+            value={searchQuery}
+          />
+        </View>
 
         <View style={styles.filterSection}>
           <Text style={styles.filterLabel}>Filtrar por tema</Text>
@@ -184,7 +210,7 @@ const Posts = () => {
 
         {visiblePosts.length === 0 ? (
           <Text accessibilityRole="alert" style={styles.emptyState}>
-            Nenhum artigo encontrado para este tema.
+            {emptyStateMessage}
           </Text>
         ) : (
           visiblePosts.map((post) => (
@@ -267,6 +293,25 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 28,
     marginBottom: 24,
+  },
+  searchSection: {
+    marginBottom: 20,
+  },
+  searchLabel: {
+    color: '#18121E',
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+  searchInput: {
+    borderColor: '#E7E0D8',
+    borderRadius: 8,
+    borderWidth: 1,
+    color: '#18121E',
+    fontSize: 16,
+    minHeight: 48,
+    paddingHorizontal: 12,
+    width: '100%',
   },
   filterSection: {
     borderTopColor: '#E7E0D8',
