@@ -171,15 +171,26 @@ const Posts = () => {
 
         <View style={styles.searchSection}>
           <Text style={styles.searchLabel}>Buscar artigos</Text>
-          <TextInput
-            accessibilityLabel="Buscar artigos"
-            onChangeText={setSearchQuery}
-            placeholder="Digite título, autor ou tema"
-            placeholderTextColor="#5F5663"
-            returnKeyType="search"
-            style={styles.searchInput}
-            value={searchQuery}
-          />
+          <View style={styles.searchControls}>
+            <TextInput
+              accessibilityLabel="Buscar artigos"
+              onChangeText={setSearchQuery}
+              placeholder="Digite título, autor ou tema"
+              placeholderTextColor="#5F5663"
+              returnKeyType="search"
+              style={styles.searchInput}
+              value={searchQuery}
+            />
+            <Pressable
+              accessibilityHint="Limpa a busca e restaura os artigos do tema selecionado."
+              accessibilityLabel="Limpar busca"
+              accessibilityRole="button"
+              onPress={() => setSearchQuery('')}
+              style={styles.clearSearchButton}
+            >
+              <Text style={styles.clearSearchText}>Limpar</Text>
+            </Pressable>
+          </View>
         </View>
 
         <View style={styles.filterSection}>
@@ -303,15 +314,35 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 8,
   },
+  searchControls: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   searchInput: {
     borderColor: '#E7E0D8',
     borderRadius: 8,
     borderWidth: 1,
     color: '#18121E',
+    flex: 1,
     fontSize: 16,
     minHeight: 48,
+    minWidth: 0,
     paddingHorizontal: 12,
-    width: '100%',
+  },
+  clearSearchButton: {
+    alignItems: 'center',
+    borderColor: '#AD4A4A',
+    borderRadius: 8,
+    borderWidth: 1,
+    justifyContent: 'center',
+    marginLeft: 8,
+    minHeight: 48,
+    paddingHorizontal: 12,
+  },
+  clearSearchText: {
+    color: '#AD4A4A',
+    fontSize: 16,
+    fontWeight: '600',
   },
   filterSection: {
     borderTopColor: '#E7E0D8',
