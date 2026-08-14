@@ -6,7 +6,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-nat
 export const DashboardView = styled.View`
     display: flex;
     flex-direction: column;
-    width: ${props => props.isOpen ? 'calc(100% - 250px)' : 'calc(100% - 80px)'};
+    width: ${(props: { isOpen: boolean }) => props.isOpen ? 'calc(100% - 250px)' : 'calc(100% - 80px)'};
 `;
 
 export const SignInTitleView = styled.View`

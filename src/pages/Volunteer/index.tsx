@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, Linking, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Linking, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import Pressable from '../../components/Pressable';
 import { Link } from '@react-navigation/native';
 
 // Keep the existing public channel available while its destination and ownership

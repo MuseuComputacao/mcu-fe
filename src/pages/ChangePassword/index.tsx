@@ -48,7 +48,7 @@ const SignIn = () => {
     handleSubmit,
     watch,
     formState: { errors, isValid },
-  } = useForm({ mode: "onSubmit" });
+  } = useForm<FormData>({ mode: "onSubmit" });
   const linkTo = useLinkTo();
   const watchPassword = watch("password");
   const [currentSecurePassword, setCurrentSecurePassword] = useState(true);
@@ -100,7 +100,7 @@ const SignIn = () => {
             render={({ field: { onBlur, onChange, value } }) => (
               <TextInput
                 autoComplete={Platform.OS === "web" ? "none" : "off"}
-                error={errors.current_password}
+                error={!!errors.current_password}
                 secureTextEntry={currentSecurePassword}
                 right={
                   <TextInput.Icon
@@ -143,7 +143,7 @@ const SignIn = () => {
             render={({ field: { onBlur, onChange, value } }) => (
               <TextInput
                 autoComplete={Platform.OS === "web" ? "none" : "off"}
-                error={errors.password}
+                error={!!errors.password}
                 secureTextEntry={securePassword}
                 right={
                   <TextInput.Icon
@@ -185,7 +185,8 @@ const SignIn = () => {
             defaultValue=""
             render={({ field: { onBlur, onChange, value } }) => (
               <TextInput
-                error={errors.password_confirmation}
+                autoComplete={Platform.OS === "web" ? "none" : "off"}
+                error={!!errors.password_confirmation}
                 secureTextEntry={secureConfirmPassword}
                 right={
                   <TextInput.Icon
@@ -227,7 +228,7 @@ const SignIn = () => {
         </InputView>
 
         <SubmitButton onPress={handleSubmit(onSubmit)}>
-          <Text style={{ color: `${style.colors.white}`, fontSize: "16px" }}>
+          <Text style={{ color: `${style.colors.white}`, fontSize: 16 }}>
             Alterar senha
           </Text>
         </SubmitButton>

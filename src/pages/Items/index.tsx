@@ -56,7 +56,7 @@ const Items = (props: any) => {
           </TouchableOpacity>
         </View>
 
-        <Text style={{ fontSize: "23px", textAlign: "center" }}>
+        <Text style={{ fontSize: 23, textAlign: "center" }}>
           Lista de Items:
         </Text>
         <View style={{ padding: 30 }}>

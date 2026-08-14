@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Image, Linking, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Image, Linking, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import Pressable from '../../components/Pressable';
 import { Link } from '@react-navigation/native';
 
 type PostTag = 'jekyll' | 'curiosidades';

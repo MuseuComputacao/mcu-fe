@@ -7,15 +7,15 @@ export const SidebarBackground = styled.View`
     align-items: center;
     background-color: ${style.colors.backgroundColor};
     height: 100%;
-    width: ${props => props.isOpen ? "250px" : "80px"};
-    padding: ${props => props.isOpen ? "15px" : "15px 0"};
+    width: ${(props: { isOpen: boolean }) => props.isOpen ? "250px" : "80px"};
+    padding: ${(props: { isOpen: boolean }) => props.isOpen ? "15px" : "15px 0"};
     transition: width 0.2s linear;
 `;
 
 export const SidebarSandwichIcon = styled.TouchableOpacity`
-    position: ${props => props.isOpen ? "realtive" : "inherit"};
-    margin-right: ${props => props.isOpen ? "10px" : "0"};
-    margin-left: ${props => props.isOpen ? "auto" : "0"};
+    position: ${(props: { isOpen: boolean }) => props.isOpen ? "realtive" : "inherit"};
+    margin-right: ${(props: { isOpen: boolean }) => props.isOpen ? "10px" : "0"};
+    margin-left: ${(props: { isOpen: boolean }) => props.isOpen ? "auto" : "0"};
     margin-bottom: 10px;
 `;
 
@@ -24,9 +24,9 @@ export const SidebarNode = styled.TouchableOpacity`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: ${props => props.isOpen ? "" : "center"};
+    justify-content: ${(props: { isOpen: boolean }) => props.isOpen ? "" : "center"};
     padding: 10px;
-    width: ${props => props.isOpen ? "90%" : "80%"};
+    width: ${(props: { isOpen: boolean }) => props.isOpen ? "90%" : "80%"};
     background-color: ${style.colors.white};
     border-radius: 10px;
     transition: none;
@@ -37,7 +37,7 @@ export const SidebarNode = styled.TouchableOpacity`
 `;
 
 export const SidebarNodeText = styled.Text`
-    display: ${props => props.isOpen ? "inline" : "none"};
-    visibility: ${props => props.isOpen ? "visible" : "hidden"};
+    display: ${(props: { isOpen: boolean }) => props.isOpen ? "inline" : "none"};
+    visibility: ${(props: { isOpen: boolean }) => props.isOpen ? "visible" : "hidden"};
     margin-left: 10px;
 `;

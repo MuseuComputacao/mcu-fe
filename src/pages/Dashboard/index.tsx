@@ -20,14 +20,14 @@ const Dashboard = () => {
 
   const handleUserData = async () => {
     const userData =  await AsyncStorage.getItem('@user')
-    setUser(JSON.parse(userData))
+    setUser(JSON.parse(userData ?? '{}'))
   }
 
     return(
       <View style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
         <Sidebar func={getIsOpenProp}/>
         <DashboardView isOpen={isOpen}>
-         <Text style={{fontSize: '23px', textAlign: 'left', margin: '50px', lineHeight: '1.6em'}}>
+         <Text style={{fontSize: 23, textAlign: 'left', margin: 50, lineHeight: 36.8}}>
           Olá, <br/>
           <strong>{user.name}</strong> bem vindo ao admin do museu da computação da UFRJ. <br/>
           ❤ 🤖 ❤

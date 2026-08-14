@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // service call reuses them through this helper.
 const getAuthenticationHeader = async() => {
     const value = await AsyncStorage.getItem('@user')
-      const userData = JSON.parse(value)
+      const userData = JSON.parse(value ?? '{}')
       const config = {
         headers: {
           'access-token': userData.token,

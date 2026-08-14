@@ -85,7 +85,7 @@ const Users = () => {
                     </TouchableOpacity>
                 </View>
 
-                <Text style={{ fontSize: '23px', textAlign: 'center' }}>
+                <Text style={{ fontSize: 23, textAlign: 'center' }}>
                     Todos os usuários:
                 </Text>
                 <View style={{ padding: 30 }}>
