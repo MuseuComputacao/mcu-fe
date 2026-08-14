@@ -5,6 +5,7 @@
       Home: '',
       About: 'about',
       VirtualTour: 'virtual-tour',
+      Posts: 'posts',
       Admin: 'admin',
       ResetPassword: 'admin/reset-password',
       Dashboard: 'admin/dashboard',
