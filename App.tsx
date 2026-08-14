@@ -16,6 +16,7 @@ export default function App() {
         <Stack.Screen name="About" component={screen.About} options={{ headerShown: false }} />
         <Stack.Screen name="VirtualTour" component={screen.VirtualTour} options={{ headerShown: false }} />
         <Stack.Screen name="Posts" component={screen.Posts} options={{ headerShown: false }} />
+        <Stack.Screen name="Contact" component={screen.Contact} options={{ headerShown: false }} />
         <Stack.Screen name="Admin" component={screen.SignIn} options={{ headerShown: false }}  />
         <Stack.Screen name="Dashboard" component={screen.Dashboard} options={{ headerShown: false }} />
         <Stack.Screen name="Users" component={screen.Users} options={{ headerShown: false }} />

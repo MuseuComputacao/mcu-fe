@@ -10,6 +10,7 @@ import ChangePassword from './ChangePassword';
 import About from './About';
 import VirtualTour from './VirtualTour';
 import Posts from './Posts';
+import Contact from './Contact';
 
  export {
   NotFound,
@@ -24,4 +25,5 @@ import Posts from './Posts';
   About,
   VirtualTour,
   Posts,
+  Contact,
 }
