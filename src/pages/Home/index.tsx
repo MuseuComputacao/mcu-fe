@@ -15,7 +15,9 @@ const Home = () => {
     return (
       <View style={styles.container}>
         <View style={styles.navigation}>
-          <Text style={styles.navigationTitle}>Navegação do Museu</Text>
+          <Text accessibilityRole="header" style={styles.navigationTitle}>
+            Navegação do Museu
+          </Text>
           <View style={styles.linkRow}>
             {nativeRoutes.map((route) => (
               <Link key={route.path} to={route.path} style={styles.link}>

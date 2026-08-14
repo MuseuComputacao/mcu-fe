@@ -39,7 +39,7 @@ const Volunteer = () => {
         </Text>
 
         <View style={styles.notice}>
-          <Text style={styles.noticeTitle}>Canal atual</Text>
+          <Text accessibilityRole="header" style={styles.noticeTitle}>Canal atual</Text>
           <Text style={styles.noticeText}>
             Esta página não coleta nem envia dados. Para consultar o canal público existente,
             abra o formulário legado em uma nova etapa do navegador.
