@@ -8,6 +8,7 @@
       Posts: 'posts',
       Contact: 'contact',
       Sponsor: 'sponsor',
+      Volunteer: 'volunteer',
       Admin: 'admin',
       ResetPassword: 'admin/reset-password',
       Dashboard: 'admin/dashboard',
