@@ -130,14 +130,18 @@ const Posts = () => {
   const [selectedFilter, setSelectedFilter] = useState<PostFilter>('todos');
   const [searchQuery, setSearchQuery] = useState('');
   const normalizedQuery = normalizeSearchText(searchQuery.trim());
-  const visiblePosts = posts.filter((post) => {
-    const matchesFilter = selectedFilter === 'todos' || post.tag === selectedFilter;
+  const matchingPosts = posts.filter((post) => {
     const searchableText = normalizeSearchText(
       `${post.title} ${post.description} ${post.author} ${post.tag}`,
     );
 
-    return matchesFilter && (!normalizedQuery || searchableText.includes(normalizedQuery));
+    return !normalizedQuery || searchableText.includes(normalizedQuery);
   });
+  const countForFilter = (filter: PostFilter) =>
+    matchingPosts.filter((post) => filter === 'todos' || post.tag === filter).length;
+  const visiblePosts = matchingPosts.filter(
+    (post) => selectedFilter === 'todos' || post.tag === selectedFilter,
+  );
   const emptyStateMessage = normalizedQuery
     ? 'Nenhum artigo encontrado para esta busca.'
     : 'Nenhum artigo encontrado para este tema.';
@@ -198,8 +202,10 @@ const Posts = () => {
           <View style={styles.filterRow}>
             {filters.map((filter) => {
               const isSelected = selectedFilter === filter.id;
+              const filterCount = countForFilter(filter.id);
               return (
                 <Pressable
+                  accessibilityLabel={`${filter.label}: ${filterCount} ${filterCount === 1 ? 'artigo' : 'artigos'}`}
                   accessibilityRole="button"
                   accessibilityState={{ selected: isSelected }}
                   key={filter.id}
@@ -207,7 +213,7 @@ const Posts = () => {
                   style={[styles.filterButton, isSelected && styles.filterButtonSelected]}
                 >
                   <Text style={[styles.filterText, isSelected && styles.filterTextSelected]}>
-                    {filter.label}
+                    {filter.label} ({filterCount})
                   </Text>
                 </Pressable>
               );
