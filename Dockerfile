@@ -1,7 +1,7 @@
-# Base image pinned to the runtime currently used by the Expo SDK 44 container.
-FROM node:16.20.2
+# Base image pinned to the minimum runtime required by the Expo SDK 45 lockfile.
+FROM node:18.20.8
 
-# Expo SDK 44 delegates its CLI entrypoint to the legacy global package.
+# Expo SDK 45 delegates its CLI entrypoint to the legacy global package.
 RUN npm install -g expo-cli@6.3.10
 
 # Set working directory
