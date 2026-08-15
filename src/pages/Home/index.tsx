@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from '@react-navigation/native';
-import { Image, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
 const nativeRoutes = [
   { label: 'Sobre', path: '/about/' },
@@ -13,13 +13,14 @@ const nativeRoutes = [
 ];
 
 const Home = () => {
-  const { height: viewportHeight, width: viewportWidth } = useWindowDimensions();
-  const legacyNavigationHeight = viewportWidth < 768 ? 64 : 106;
+  const { height: viewportHeight } = useWindowDimensions();
+  const [legacyNavigationHeight, setLegacyNavigationHeight] = useState(0);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View
         accessibilityLabel="Navegação principal do Museu da Computação"
+        onLayout={(event) => setLegacyNavigationHeight(event.nativeEvent.layout.height)}
         style={styles.navigation}
       >
         <View style={styles.brandRow}>
@@ -43,7 +44,7 @@ const Home = () => {
         </View>
       </View>
 
-      <View style={styles.legacyFrame}>
+      <View style={[styles.legacyFrame, { height: viewportHeight }]}>
         <iframe
           src="https://museucomputacao.github.io"
           title="Página pública legada do Museu da Computação"
@@ -59,7 +60,7 @@ const Home = () => {
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -89,10 +90,9 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#17111D',
-    flex: 1,
+    flexGrow: 1,
   },
   legacyFrame: {
-    flex: 1,
     overflow: 'hidden',
     width: '100%',
   },
