@@ -120,7 +120,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                         <TextInput
-                            autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
+                            autoComplete="off"
                             error={!!errors.name}
                             mode="outlined"
                             activeOutlineColor={style.colors.primary}
@@ -176,7 +176,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                         <TextInput
-                            autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
+                            autoComplete="off"
                             error={!!errors.email}
                             mode="outlined"
                             activeOutlineColor={style.colors.primary}
@@ -209,7 +209,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                         <TextInput
-                            autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
+                            autoComplete="off"
                             error={!!errors.password}
                             secureTextEntry={securePassword}
                             right={
@@ -247,7 +247,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                         <TextInput
-                            autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
+                            autoComplete="off"
                             error={!!errors.password_confirmation}
                             secureTextEntry={secureConfirmPassword}
                             right={

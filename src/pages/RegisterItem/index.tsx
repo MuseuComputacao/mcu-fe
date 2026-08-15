@@ -180,7 +180,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
+                        autoComplete="off"
                         error={!!errors.name}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
@@ -209,7 +209,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
+                        autoComplete="off"
                         error={!!errors.material}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
@@ -240,7 +240,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
+                        autoComplete="off"
                         error={!!errors.reference_measures}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
@@ -272,7 +272,7 @@ const SignIn = () => {
                   defaultValue=""
                   render={({ field: { onBlur, onChange, value } }) => (
                     <TextInput
-                      autoComplete={Platform.OS === "web" ? "none" : "off"}
+                      autoComplete="off"
                       error={!!errors.description}
                       mode="outlined"
                       activeOutlineColor={style.colors.primary}
@@ -314,7 +314,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
+                        autoComplete="off"
                         error={!!errors.release_date}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
@@ -345,7 +345,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
+                        autoComplete="off"
                         error={!!errors.publication_date}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
@@ -374,7 +374,7 @@ const SignIn = () => {
                   defaultValue=""
                   render={({ field: { onBlur, onChange, value } }) => (
                     <TextInput
-                      autoComplete={Platform.OS === "web" ? "none" : "off"}
+                      autoComplete="off"
                       error={!!errors.conservation_state}
                       mode="outlined"
                       activeOutlineColor={style.colors.primary}
@@ -405,7 +405,7 @@ const SignIn = () => {
                   defaultValue=""
                   render={({ field: { onBlur, onChange, value } }) => (
                     <TextInput
-                      autoComplete={Platform.OS === "web" ? "none" : "off"}
+                      autoComplete="off"
                       error={!!errors.conservation_description}
                       mode="outlined"
                       activeOutlineColor={style.colors.primary}
@@ -438,7 +438,7 @@ const SignIn = () => {
                   defaultValue=""
                   render={({ field: { onBlur, onChange, value } }) => (
                     <TextInput
-                      autoComplete={Platform.OS === "web" ? "none" : "off"}
+                      autoComplete="off"
                       error={!!errors.recommendations}
                       mode="outlined"
                       activeOutlineColor={style.colors.primary}
@@ -471,7 +471,7 @@ const SignIn = () => {
                   defaultValue=""
                   render={({ field: { onBlur, onChange, value } }) => (
                     <TextInput
-                      autoComplete={Platform.OS === "web" ? "none" : "off"}
+                      autoComplete="off"
                       error={!!errors.general_observations}
                       mode="outlined"
                       activeOutlineColor={style.colors.primary}
@@ -513,7 +513,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
+                        autoComplete="off"
                         error={!!errors.origin}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
@@ -544,7 +544,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
+                        autoComplete="off"
                         error={!!errors.country}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
@@ -575,7 +575,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
+                        autoComplete="off"
                         error={!!errors.localization}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
@@ -616,7 +616,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
+                        autoComplete="off"
                         error={!!errors.donor_by}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
@@ -647,7 +647,7 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
+                        autoComplete="off"
                         error={!!errors.donation_date}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}

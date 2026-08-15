@@ -99,7 +99,7 @@ const SignIn = () => {
             defaultValue=""
             render={({ field: { onBlur, onChange, value } }) => (
               <TextInput
-                autoComplete={Platform.OS === "web" ? "none" : "off"}
+                autoComplete="off"
                 error={!!errors.current_password}
                 secureTextEntry={currentSecurePassword}
                 right={
@@ -142,7 +142,7 @@ const SignIn = () => {
             defaultValue=""
             render={({ field: { onBlur, onChange, value } }) => (
               <TextInput
-                autoComplete={Platform.OS === "web" ? "none" : "off"}
+                autoComplete="off"
                 error={!!errors.password}
                 secureTextEntry={securePassword}
                 right={
@@ -185,7 +185,7 @@ const SignIn = () => {
             defaultValue=""
             render={({ field: { onBlur, onChange, value } }) => (
               <TextInput
-                autoComplete={Platform.OS === "web" ? "none" : "off"}
+                autoComplete="off"
                 error={!!errors.password_confirmation}
                 secureTextEntry={secureConfirmPassword}
                 right={

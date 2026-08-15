@@ -1,8 +1,10 @@
-# Base image pinned to the minimum runtime required by the Expo SDK 45 lockfile.
+# Base image pinned for the Expo SDK 46 compatibility step.
 FROM node:18.20.8
 
-# Expo SDK 45 delegates its CLI entrypoint to the legacy global package.
-RUN npm install -g expo-cli@6.3.10
+# Force the SDK-provided CLI instead of the removed global expo-cli package.
+ENV EXPO_USE_LOCAL_CLI=true
+# Webpack 4 used by SDK46 needs the OpenSSL 3 legacy provider on Node18.
+ENV NODE_OPTIONS=--openssl-legacy-provider
 
 # Set working directory
 WORKDIR /app
@@ -11,7 +13,7 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 
 # Install dependencies
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
 # Copy the rest of the source code
 COPY . .
