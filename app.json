@@ -4,9 +4,9 @@
     "slug": "mcu-fe",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/museu-icon.png",
+    "icon": "./assets/museu-icon-square.png",
     "splash": {
-      "image": "./assets/museu-icon.png",
+      "image": "./assets/museu-icon-square.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,12 +21,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/museu-icon.png",
+        "foregroundImage": "./assets/museu-icon-square.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/museu-icon.png"
+      "favicon": "./assets/museu-icon-square.png"
     }
   }
 }

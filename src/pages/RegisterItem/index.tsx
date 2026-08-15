@@ -100,7 +100,7 @@ const SignIn = () => {
     });
 
     if (!result.cancelled && result.base64) {
-      setCapturedPhoto(result.uri);
+      setCapturedPhoto(result.uri ?? null);
       setHasPhoto(true);
       setValue("id_photo", result.base64, { shouldValidate: true });
       onChange(result.base64);

@@ -1,11 +1,10 @@
-# Base image pinned for the Expo SDK 46 compatibility step.
-FROM node:18.20.8
+# Base image pinned for the Expo SDK 47 compatibility step.
+FROM node:22.23.2
 
 # Force the SDK-provided CLI instead of the removed global expo-cli package.
 ENV EXPO_USE_LOCAL_CLI=true
-# Webpack 4 used by SDK46 needs the OpenSSL 3 legacy provider on Node18.
+# Expo SDK 47 still uses Webpack 4, which needs the OpenSSL legacy provider on Node 22.
 ENV NODE_OPTIONS=--openssl-legacy-provider
-
 # Set working directory
 WORKDIR /app
 
