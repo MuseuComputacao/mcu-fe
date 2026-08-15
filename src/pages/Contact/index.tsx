@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Linking, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Linking, Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Pressable from '../../components/Pressable';
 import { Link } from '@react-navigation/native';
 
@@ -33,17 +33,23 @@ const Contact = () => {
         </Link>
 
         <Text style={styles.paragraph}>
-          O canal institucional de contato está em atualização. Enquanto o destino e a
-          responsabilidade pelo atendimento são confirmados, o formulário público atual
-          continua disponível no site legado.
+          Use o formulário público de contato já publicado pelo Museu da Computação.
+          O envio continua sendo feito diretamente pelo canal existente.
         </Text>
 
         <View style={styles.notice}>
-          <Text accessibilityRole="header" style={styles.noticeTitle}>Canal atual</Text>
+          <Text accessibilityRole="header" style={styles.noticeTitle}>Formulário de contato</Text>
           <Text style={styles.noticeText}>
-            Esta página não coleta nem envia dados. Para usar o canal existente, abra o
-            formulário público em uma nova etapa do navegador.
+            O formulário original está disponível abaixo. Se ele não carregar no seu
+            dispositivo, abra-o em uma nova etapa do navegador.
           </Text>
+          {Platform.OS === 'web' && (
+            <iframe
+              src={legacyContactForm}
+              title="Formulário público de contato do Museu da Computação"
+              style={{ border: 0, height: 720, marginBottom: 12, width: '100%' }}
+            />
+          )}
           <Pressable
             accessibilityLabel="Abrir formulário de contato atual"
             accessibilityRole="link"

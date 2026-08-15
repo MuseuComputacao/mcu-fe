@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Linking, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Linking, Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Pressable from '../../components/Pressable';
 import { Link } from '@react-navigation/native';
 
@@ -33,17 +33,23 @@ const Sponsor = () => {
         </Link>
 
         <Text style={styles.paragraph}>
-          O canal público de patrocínio permanece disponível no site legado. As condições
-          de patrocínio e a responsabilidade pelo atendimento ainda dependem de confirmação;
-          por isso, esta página não publica preços, propostas ou compromissos institucionais.
+          Use o formulário público de patrocínio já publicado pelo Museu da Computação.
+          Esta página mantém o canal existente e não cria novos compromissos institucionais.
         </Text>
 
         <View style={styles.notice}>
-          <Text accessibilityRole="header" style={styles.noticeTitle}>Canal atual</Text>
+          <Text accessibilityRole="header" style={styles.noticeTitle}>Formulário de patrocínio</Text>
           <Text style={styles.noticeText}>
-            Esta página não coleta nem envia dados. Para consultar o canal público existente,
-            abra o formulário legado em uma nova etapa do navegador.
+            O formulário original está disponível abaixo. Se ele não carregar no seu
+            dispositivo, abra-o em uma nova etapa do navegador.
           </Text>
+          {Platform.OS === 'web' && (
+            <iframe
+              src={legacySponsorForm}
+              title="Formulário público de patrocínio do Museu da Computação"
+              style={{ border: 0, height: 720, marginBottom: 12, width: '100%' }}
+            />
+          )}
           <Pressable
             accessibilityLabel="Abrir formulário de patrocínio atual"
             accessibilityRole="link"

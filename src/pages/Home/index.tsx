@@ -7,6 +7,7 @@ const nativeRoutes = [
   { label: 'Blog', path: '/posts/' },
   { label: 'Tour Virtual', path: '/virtual-tour/' },
   { label: 'Contato', path: '/contact/' },
+  { label: 'Doação de itens', path: '/donation/' },
   { label: 'Seja Voluntário', path: '/volunteer/' },
   { label: 'Seja Patrocinador', path: '/sponsor/' },
 ];

@@ -11,6 +11,7 @@ import About from './About';
 import VirtualTour from './VirtualTour';
 import Posts from './Posts';
 import Contact from './Contact';
+import Donation from './Donation';
 import Sponsor from './Sponsor';
 import Volunteer from './Volunteer';
 
@@ -28,6 +29,7 @@ import Volunteer from './Volunteer';
   VirtualTour,
   Posts,
   Contact,
+  Donation,
   Sponsor,
   Volunteer,
 }

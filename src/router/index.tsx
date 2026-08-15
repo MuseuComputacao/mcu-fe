@@ -7,6 +7,7 @@
       VirtualTour: 'virtual-tour',
       Posts: 'posts',
       Contact: 'contact',
+      Donation: 'donation',
       Sponsor: 'sponsor',
       Volunteer: 'volunteer',
       Admin: 'admin',
