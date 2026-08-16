@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from '@react-navigation/native';
-import { Image, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { Image, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
 const nativeRoutes = [
   { label: 'Sobre', path: '/about/' },
@@ -17,7 +17,7 @@ const Home = () => {
   const [legacyNavigationHeight, setLegacyNavigationHeight] = useState(0);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <View
         accessibilityLabel="Navegação principal do Museu da Computação"
         onLayout={(event) => setLegacyNavigationHeight(event.nativeEvent.layout.height)}
@@ -54,13 +54,13 @@ const Home = () => {
             border: 0,
             display: 'block',
             flexShrink: 0,
-            height: viewportHeight + legacyNavigationHeight,
+            height: viewportHeight,
             transform: `translateY(-${legacyNavigationHeight}px)`,
             width: '100%',
           }}
         />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -90,9 +90,10 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#17111D',
-    flexGrow: 1,
+    flex: 1,
   },
   legacyFrame: {
+    flex: 1,
     overflow: 'hidden',
     width: '100%',
   },
