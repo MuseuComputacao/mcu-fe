@@ -6,30 +6,69 @@ Este documento resume as responsabilidades observadas no frontend sem alterar o 
 
 ```text
 App.tsx
-  └── NavigationContainer + Stack.Navigator
-        ├── Home
-        ├── autenticação (Admin, AddUsers, ResetPassword)
-        └── painel (Dashboard, Users, Items, AddItems)
+  └── NavigationContainer (linking = src/router/index.tsx)
+        └── Stack.Navigator
+              ├── público: Home, About, VirtualTour, Posts, Contact, Sponsor, Volunteer
+              └── autenticação/administração: Admin, ResetPassword, Dashboard,
+                    Users, AddUsers, Items, AddItems
 
 pages ── usam ── services ── usam ── services/api.ts ── HTTP JSON ── MCU Core
   │                              └── utils.tsx recupera os cabeçalhos de sessão
   └── components compartilhados (Sidebar, Dropdown, Progress)
 ```
 
+`src/pages/index.tsx` reexporta as telas consumidas pelo `Stack.Navigator`. As
+seis telas públicas internalizadas têm componentes próprios em `src/pages/`;
+as telas administrativas e de autenticação existentes continuam no mesmo
+stack.
+
 ## Navegação
 
-Os nomes das telas registrados em `App.tsx` precisam corresponder às chaves de `src/router/index.tsx`. Os caminhos de deep linking observados são:
+Os nomes das telas registrados em `App.tsx` correspondem às chaves de
+`src/router/index.tsx`. O `NavigationContainer` recebe esse objeto de linking,
+que atualmente declara somente o prefixo local `http://localhost:19006`. Os
+valores de `config.screens` não têm barra final; os sufixos públicos preservados
+para acesso web são mostrados na última coluna:
 
-| Tela | Caminho |
+| Tela | `config.screens` | URL pública |
 | --- | --- |
-| Home | `/` |
-| Admin | `/admin` |
-| ResetPassword | `/admin/reset-password` |
-| Dashboard | `/admin/dashboard` |
-| Users | `/admin/users` |
-| AddUsers | `/admin/users/add` |
-| Items | `/admin/items` |
-| AddItems | `/admin/items/add` |
+| Home | `''` | `/` |
+| About | `about` | `/about/` |
+| VirtualTour | `virtual-tour` | `/virtual-tour/` |
+| Posts | `posts` | `/posts/` |
+| Contact | `contact` | `/contact/` |
+| Sponsor | `sponsor` | `/sponsor/` |
+| Volunteer | `volunteer` | `/volunteer/` |
+| Admin | `admin` | `/admin` |
+| ResetPassword | `admin/reset-password` | `/admin/reset-password` |
+| Dashboard | `admin/dashboard` | `/admin/dashboard` |
+| Users | `admin/users` | `/admin/users` |
+| AddUsers | `admin/users/add` | `/admin/users/add` |
+| Items | `admin/items` | `/admin/items` |
+| AddItems | `admin/items/add` | `/admin/items/add` |
+| NotFound | `*` | qualquer caminho não mapeado |
+
+### Conteúdo público e fallback
+
+- A Home oferece links nativos para `/about/`, `/virtual-tour/`, `/posts/`,
+  `/contact/`, `/sponsor/` e `/volunteer/`. O mesmo componente ainda renderiza
+  um `iframe` para `https://museucomputacao.github.io` abaixo desses links.
+- `/posts/` mantém localmente uma lista de 12 registros com título, descrição,
+  autor, data, tema e `legacyPath`. A busca normaliza acentos e caixa e combina
+  com o filtro de tema; a ação de leitura abre
+  `https://museucomputacao.github.io` concatenado ao `legacyPath`. Os corpos dos
+  artigos continuam no fallback Jekyll.
+- `/contact/`, `/sponsor/` e `/volunteer/` são telas informativas. Cada uma
+  preserva o canal público legado como uma URL externa e usa
+  `Linking.openURL` a partir de um `Pressable` com papel de link. Não há campos
+  de entrada, coleta ou submissão implementados nessas telas; destino,
+  responsabilidade e demais decisões institucionais não são definidos pelo
+  frontend.
+
+O iframe geral ainda é parte do fluxo da Home. Sua remoção depende de smoke e
+paridade verificáveis por rota — incluindo acesso direto, reload,
+responsividade, console/rede e compatibilidade dos canais legados — e não é
+declarada por esta documentação.
 
 ## Serviços HTTP
 
@@ -43,5 +82,5 @@ O cliente envia os cabeçalhos de Devise Token Auth recuperados de `AsyncStorage
 ## Pontos de manutenção
 
 - A URL base efetivamente usada pelo Axios está fixa em `src/services/api.ts`; a variável `BASE_API` presente nos arquivos `.env.*` ainda não é consumida.
-- A tela inicial contém o iframe do site público. A substituição desse fluxo exige decisão de produto e validação do conteúdo de destino.
+- A Home ainda contém o iframe do site público. A substituição desse fluxo exige validação de paridade e smoke por rota, além das decisões de conteúdo e compatibilidade já registradas.
 - Não há suíte de testes ou lint configurados nos scripts atuais do `package.json`; registre validação manual e limitações no checkpoint de cada mudança.

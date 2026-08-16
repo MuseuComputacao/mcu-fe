@@ -39,7 +39,7 @@ function Copyright(props: any) {
 }
 
 const SignIn = () => {
-    const { control, handleSubmit, formState: { errors, isValid } } = useForm({ mode: "onSubmit" });
+    const { control, handleSubmit, formState: { errors, isValid } } = useForm<FormData>({ mode: "onSubmit" });
     const [securePassword, setSecurePassword] = useState(true);
     const linkTo = useLinkTo();
 
@@ -85,8 +85,8 @@ const SignIn = () => {
                         defaultValue=""
                         render={({ field: { onBlur, onChange, value } }) => (
                             <TextInput
-                                autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
-                                error={errors.email}
+                                autoComplete="off"
+                                error={!!errors.email}
                                 mode="outlined"
                                 activeOutlineColor={style.colors.primary}
                                 keyboardType="email-address"
@@ -118,8 +118,8 @@ const SignIn = () => {
                         defaultValue=""
                         render={({ field: { onBlur, onChange, value } }) => (
                             <TextInput
-                                autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
-                                error={errors.password}
+                                autoComplete="off"
+                                error={!!errors.password}
                                 secureTextEntry={securePassword}
                                 right={
                                     <TextInput.Icon
@@ -156,7 +156,7 @@ const SignIn = () => {
                 </ForgotPasswordView>
 
                 <SubmitButton onPress={handleSubmit(onSubmit)}>
-                    <Text style={{ color: `${style.colors.white}`, fontSize: '16px' }}>Entrar</Text>
+                    <Text style={{ color: `${style.colors.white}`, fontSize: 16 }}>Entrar</Text>
                 </SubmitButton>
             </SignInView>
             <Copyright />

@@ -1,12 +1,183 @@
-import React from 'react';
-import { View, Button } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Link } from '@react-navigation/native';
+import { Image, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
-const Home = (props: any) => {
-    return (
-      <View style={{ width: '100%', height: '100vh'}}>
-        <iframe src='https://museucomputacao.github.io' width={'100%'} height={'100%'} frameBorder={0} />
-      </View>
-    );
+const LEGACY_ORIGIN = 'https://museucomputacao.github.io';
+
+type LegacyContentHeightMessage = {
+  source: 'museucomputacao-legacy';
+  type: 'content-height';
+  height: number;
+};
+
+const isLegacyContentHeightMessage = (message: unknown): message is LegacyContentHeightMessage => {
+  if (message === null || typeof message !== 'object') {
+    return false;
   }
+
+  const candidate = message as Partial<LegacyContentHeightMessage>;
+
+  return (
+    candidate.source === 'museucomputacao-legacy' &&
+    candidate.type === 'content-height' &&
+    typeof candidate.height === 'number' &&
+    Number.isFinite(candidate.height) &&
+    candidate.height > 0
+  );
+};
+
+const nativeRoutes = [
+  { label: 'Sobre', path: '/about/' },
+  { label: 'Blog', path: '/posts/' },
+  { label: 'Tour Virtual', path: '/virtual-tour/' },
+  { label: 'Contato', path: '/contact/' },
+  { label: 'Doação de itens', path: '/donation/' },
+  { label: 'Seja Voluntário', path: '/volunteer/' },
+  { label: 'Seja Patrocinador', path: '/sponsor/' },
+];
+
+const Home = () => {
+  const { height: viewportHeight } = useWindowDimensions();
+  const legacyFrameRef = useRef<HTMLIFrameElement>(null);
+  const [legacyNavigationHeight, setLegacyNavigationHeight] = useState(0);
+  const [legacyContentHeight, setLegacyContentHeight] = useState<number | null>(null);
+  const legacyFrameHeight = legacyContentHeight ?? Math.max(viewportHeight - legacyNavigationHeight, 0);
+  const requestLegacyContentHeight = useCallback(() => {
+    legacyFrameRef.current?.contentWindow?.postMessage(
+      { source: 'museucomputacao-frontend', type: 'request-content-height' },
+      LEGACY_ORIGIN
+    );
+  }, []);
+
+  useEffect(() => {
+    const receiveLegacyHeight = (event: MessageEvent<unknown>) => {
+      if (event.origin !== LEGACY_ORIGIN || !isLegacyContentHeightMessage(event.data)) {
+        return;
+      }
+
+      setLegacyContentHeight(Math.ceil(event.data.height));
+    };
+
+    window.addEventListener('message', receiveLegacyHeight);
+    requestLegacyContentHeight();
+
+    return () => window.removeEventListener('message', receiveLegacyHeight);
+  }, [requestLegacyContentHeight]);
+
+  return (
+    <ScrollView
+      contentContainerStyle={styles.content}
+      scrollEnabled={legacyContentHeight !== null}
+      style={styles.container}
+    >
+      <View
+        accessibilityLabel="Navegação principal do Museu da Computação"
+        onLayout={(event) => setLegacyNavigationHeight(event.nativeEvent.layout.height)}
+        style={styles.navigation}
+      >
+        <View style={styles.brandRow}>
+          <Image
+            accessibilityLabel="Símbolo do Museu da Computação"
+            source={require('../../../assets/museu-icon-square.png')}
+            style={styles.brandMark}
+          />
+          <View>
+            <Text style={styles.brandName}>Museu da Computação</Text>
+            <Text style={styles.brandSubtitle}>Universidade Federal do Rio de Janeiro</Text>
+          </View>
+        </View>
+
+        <View style={styles.linkRow}>
+          {nativeRoutes.map((route) => (
+            <Link key={route.path} to={route.path} style={styles.link}>
+              <Text style={styles.linkText}>{route.label}</Text>
+            </Link>
+          ))}
+        </View>
+      </View>
+
+      <View style={styles.legacyFrame}>
+        <iframe
+          ref={legacyFrameRef}
+          src="https://museucomputacao.github.io/?embed=1"
+          title="Página pública legada do Museu da Computação"
+          width="100%"
+          frameBorder={0}
+          onLoad={requestLegacyContentHeight}
+          scrolling={legacyContentHeight === null ? 'auto' : 'no'}
+          style={{
+            border: 0,
+            display: 'block',
+            height: legacyFrameHeight,
+            width: '100%',
+          }}
+        />
+      </View>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  brandMark: {
+    height: 46,
+    marginRight: 12,
+    width: 46,
+  },
+  brandName: {
+    color: '#F8F2EA',
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: 0.2,
+  },
+  brandRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  brandSubtitle: {
+    color: '#D2BDC0',
+    fontSize: 10,
+    letterSpacing: 0.35,
+    marginTop: 2,
+    textTransform: 'uppercase',
+  },
+  container: {
+    backgroundColor: '#17111D',
+    flex: 1,
+  },
+  content: {
+    flexGrow: 1,
+  },
+  legacyFrame: {
+    width: '100%',
+  },
+  link: {
+    backgroundColor: '#2A1A29',
+    borderColor: '#664150',
+    borderRadius: 999,
+    borderWidth: 1,
+    marginBottom: 6,
+    marginRight: 8,
+    paddingHorizontal: 13,
+    paddingVertical: 8,
+  },
+  linkRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  linkText: {
+    color: '#F8F2EA',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  navigation: {
+    backgroundColor: '#17111D',
+    borderBottomColor: '#A91D3A',
+    borderBottomWidth: 2,
+    paddingHorizontal: 20,
+    paddingTop: 14,
+    paddingBottom: 8,
+  },
+});
 
 export default Home;

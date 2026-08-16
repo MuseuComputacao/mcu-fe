@@ -54,7 +54,7 @@ function Copyright(props: any) {
 
 const SignIn = () => {
 
-    const { control, handleSubmit, formState: { errors, isValid }, watch, getFieldState, getValues, trigger, clearErrors } = useForm({ mode: "onSubmit" });
+    const { control, handleSubmit, formState: { errors, isValid }, watch, getFieldState, getValues, trigger, clearErrors } = useForm<FormData>({ mode: "onSubmit" });
     const [securePassword, setSecurePassword] = useState(true);
     const [secureConfirmPassword, setSecureConfirmPassword] = useState(true);
     const [currentSection, setCurrentSection] = useState(1);
@@ -120,8 +120,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                         <TextInput
-                            autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
-                            error={errors.name}
+                            autoComplete="off"
+                            error={!!errors.name}
                             mode="outlined"
                             activeOutlineColor={style.colors.primary}
                             value={value}
@@ -144,7 +144,7 @@ const SignIn = () => {
                 <Controller
                     control={control}
                     name="role"
-                    defaultValue={roles[0]}
+                    defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                         <Dropdown
                             value={value}
@@ -176,8 +176,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                         <TextInput
-                            autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
-                            error={errors.email}
+                            autoComplete="off"
+                            error={!!errors.email}
                             mode="outlined"
                             activeOutlineColor={style.colors.primary}
                             keyboardType="email-address"
@@ -209,8 +209,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                         <TextInput
-                            autoComplete={Platform.OS === 'web' ? 'none' : 'off'}
-                            error={errors.password}
+                            autoComplete="off"
+                            error={!!errors.password}
                             secureTextEntry={securePassword}
                             right={
                                 <TextInput.Icon
@@ -247,7 +247,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                         <TextInput
-                            error={errors.password_confirmation}
+                            autoComplete="off"
+                            error={!!errors.password_confirmation}
                             secureTextEntry={secureConfirmPassword}
                             right={
                                 <TextInput.Icon
@@ -283,10 +284,10 @@ const SignIn = () => {
 
             <ButtonsView>
                 <NextButton onPress={handleSubmit(onSubmit)}>
-                    <Text style={{ color: `${style.colors.white}`, fontSize: '16px' }}>Criar novo usuário</Text>
+                    <Text style={{ color: `${style.colors.white}`, fontSize: 16 }}>Criar novo usuário</Text>
                 </NextButton>
                 <BackButton onPress={() => setCurrentSection(1)}>
-                    <Text style={{ color: `${style.colors.white}`, fontSize: '16px' }}>Voltar</Text>
+                    <Text style={{ color: `${style.colors.white}`, fontSize: 16 }}>Voltar</Text>
                 </BackButton>
             </ButtonsView>
 

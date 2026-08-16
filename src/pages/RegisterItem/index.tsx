@@ -100,7 +100,7 @@ const SignIn = () => {
     });
 
     if (!result.cancelled && result.base64) {
-      setCapturedPhoto(result.uri);
+      setCapturedPhoto(result.uri ?? null);
       setHasPhoto(true);
       setValue("id_photo", result.base64, { shouldValidate: true });
       onChange(result.base64);
@@ -180,8 +180,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
-                        error={errors.name}
+                        autoComplete="off"
+                        error={!!errors.name}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
                         value={value}
@@ -209,8 +209,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
-                        error={errors.material}
+                        autoComplete="off"
+                        error={!!errors.material}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
                         value={value}
@@ -240,8 +240,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
-                        error={errors.reference_measures}
+                        autoComplete="off"
+                        error={!!errors.reference_measures}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
                         value={value}
@@ -272,8 +272,8 @@ const SignIn = () => {
                   defaultValue=""
                   render={({ field: { onBlur, onChange, value } }) => (
                     <TextInput
-                      autoComplete={Platform.OS === "web" ? "none" : "off"}
-                      error={errors.description}
+                      autoComplete="off"
+                      error={!!errors.description}
                       mode="outlined"
                       activeOutlineColor={style.colors.primary}
                       value={value}
@@ -314,8 +314,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
-                        error={errors.release_date}
+                        autoComplete="off"
+                        error={!!errors.release_date}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
                         value={value}
@@ -345,8 +345,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
-                        error={errors.publication_date}
+                        autoComplete="off"
+                        error={!!errors.publication_date}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
                         value={value}
@@ -374,8 +374,8 @@ const SignIn = () => {
                   defaultValue=""
                   render={({ field: { onBlur, onChange, value } }) => (
                     <TextInput
-                      autoComplete={Platform.OS === "web" ? "none" : "off"}
-                      error={errors.conservation_state}
+                      autoComplete="off"
+                      error={!!errors.conservation_state}
                       mode="outlined"
                       activeOutlineColor={style.colors.primary}
                       value={value}
@@ -405,8 +405,8 @@ const SignIn = () => {
                   defaultValue=""
                   render={({ field: { onBlur, onChange, value } }) => (
                     <TextInput
-                      autoComplete={Platform.OS === "web" ? "none" : "off"}
-                      error={errors.conservation_description}
+                      autoComplete="off"
+                      error={!!errors.conservation_description}
                       mode="outlined"
                       activeOutlineColor={style.colors.primary}
                       value={value}
@@ -438,8 +438,8 @@ const SignIn = () => {
                   defaultValue=""
                   render={({ field: { onBlur, onChange, value } }) => (
                     <TextInput
-                      autoComplete={Platform.OS === "web" ? "none" : "off"}
-                      error={errors.recommendations}
+                      autoComplete="off"
+                      error={!!errors.recommendations}
                       mode="outlined"
                       activeOutlineColor={style.colors.primary}
                       value={value}
@@ -471,8 +471,8 @@ const SignIn = () => {
                   defaultValue=""
                   render={({ field: { onBlur, onChange, value } }) => (
                     <TextInput
-                      autoComplete={Platform.OS === "web" ? "none" : "off"}
-                      error={errors.general_observations}
+                      autoComplete="off"
+                      error={!!errors.general_observations}
                       mode="outlined"
                       activeOutlineColor={style.colors.primary}
                       value={value}
@@ -513,8 +513,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
-                        error={errors.origin}
+                        autoComplete="off"
+                        error={!!errors.origin}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
                         value={value}
@@ -544,8 +544,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
-                        error={errors.country}
+                        autoComplete="off"
+                        error={!!errors.country}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
                         value={value}
@@ -575,8 +575,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
-                        error={errors.localization}
+                        autoComplete="off"
+                        error={!!errors.localization}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
                         value={value}
@@ -616,8 +616,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
-                        error={errors.donor_by}
+                        autoComplete="off"
+                        error={!!errors.donor_by}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
                         value={value}
@@ -647,8 +647,8 @@ const SignIn = () => {
                     defaultValue=""
                     render={({ field: { onBlur, onChange, value } }) => (
                       <TextInput
-                        autoComplete={Platform.OS === "web" ? "none" : "off"}
-                        error={errors.donation_date}
+                        autoComplete="off"
+                        error={!!errors.donation_date}
                         mode="outlined"
                         activeOutlineColor={style.colors.primary}
                         value={value}
@@ -675,7 +675,7 @@ const SignIn = () => {
               <ButtonsView>
                 <NextButton onPress={handleSubmit(onSubmit)}>
                   <Text
-                    style={{ color: `${style.colors.white}`, fontSize: "16px" }}
+                    style={{ color: `${style.colors.white}`, fontSize: 16 }}
                   >
                     Cadastrar novo item
                   </Text>

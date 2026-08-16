@@ -2,13 +2,13 @@ import React from 'react';
 import {
   Image,
   Linking,
-  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import Pressable from '../../components/Pressable';
 import { Link } from '@react-navigation/native';
 
 const partners = [

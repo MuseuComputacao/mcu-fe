@@ -9,6 +9,11 @@ import AddItems from './RegisterItem'
 import ChangePassword from './ChangePassword';
 import About from './About';
 import VirtualTour from './VirtualTour';
+import Posts from './Posts';
+import Contact from './Contact';
+import Donation from './Donation';
+import Sponsor from './Sponsor';
+import Volunteer from './Volunteer';
 
  export {
   NotFound,
@@ -22,4 +27,9 @@ import VirtualTour from './VirtualTour';
   ChangePassword,
   About,
   VirtualTour,
+  Posts,
+  Contact,
+  Donation,
+  Sponsor,
+  Volunteer,
 }

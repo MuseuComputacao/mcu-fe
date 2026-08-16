@@ -11,7 +11,7 @@ const dropdownStyle = {
   paddingLeft: 14,
   paddingRight: 14,
   fontSize: 16,
-  backgroundColor: style.colors.offWhite,
+  backgroundColor: style.colors.white,
   borderRadius: +style.borderRadius.slice(0, 2),
 };
 

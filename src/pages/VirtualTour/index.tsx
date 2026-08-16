@@ -1,8 +1,15 @@
 import React from 'react';
 import { Link } from '@react-navigation/native';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Linking, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import Pressable from '../../components/Pressable';
+
+const legacyVirtualTour = 'https://my.matterport.com/show/?m=oRmZ9RNCDCY';
 
 const VirtualTour = () => {
+  const openLegacyVirtualTour = () => {
+    Linking.openURL(legacyVirtualTour).catch(() => undefined);
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.content}>
@@ -11,6 +18,14 @@ const VirtualTour = () => {
         <Text accessibilityRole="text" style={styles.message}>
           Em construção...
         </Text>
+        <Pressable
+          accessibilityLabel="Abrir o tour virtual publicado"
+          accessibilityRole="link"
+          onPress={openLegacyVirtualTour}
+          style={styles.tourLink}
+        >
+          <Text style={styles.linkText}>Abrir tour virtual publicado</Text>
+        </Pressable>
         <Link to="/" style={styles.homeLink}>
           <Text style={styles.linkText}>Voltar para o início</Text>
         </Link>
@@ -48,6 +63,10 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   homeLink: {
+    paddingVertical: 8,
+  },
+  tourLink: {
+    marginBottom: 16,
     paddingVertical: 8,
   },
   linkText: {
