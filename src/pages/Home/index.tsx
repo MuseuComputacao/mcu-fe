@@ -1,6 +1,30 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from '@react-navigation/native';
-import { Image, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+
+const LEGACY_ORIGIN = 'https://museucomputacao.github.io';
+
+type LegacyContentHeightMessage = {
+  source: 'museucomputacao-legacy';
+  type: 'content-height';
+  height: number;
+};
+
+const isLegacyContentHeightMessage = (message: unknown): message is LegacyContentHeightMessage => {
+  if (message === null || typeof message !== 'object') {
+    return false;
+  }
+
+  const candidate = message as Partial<LegacyContentHeightMessage>;
+
+  return (
+    candidate.source === 'museucomputacao-legacy' &&
+    candidate.type === 'content-height' &&
+    typeof candidate.height === 'number' &&
+    Number.isFinite(candidate.height) &&
+    candidate.height > 0
+  );
+};
 
 const nativeRoutes = [
   { label: 'Sobre', path: '/about/' },
@@ -14,11 +38,38 @@ const nativeRoutes = [
 
 const Home = () => {
   const { height: viewportHeight } = useWindowDimensions();
+  const legacyFrameRef = useRef<HTMLIFrameElement>(null);
   const [legacyNavigationHeight, setLegacyNavigationHeight] = useState(0);
-  const legacyFrameHeight = Math.max(viewportHeight - legacyNavigationHeight, 0);
+  const [legacyContentHeight, setLegacyContentHeight] = useState<number | null>(null);
+  const legacyFrameHeight = legacyContentHeight ?? Math.max(viewportHeight - legacyNavigationHeight, 0);
+  const requestLegacyContentHeight = useCallback(() => {
+    legacyFrameRef.current?.contentWindow?.postMessage(
+      { source: 'museucomputacao-frontend', type: 'request-content-height' },
+      LEGACY_ORIGIN
+    );
+  }, []);
+
+  useEffect(() => {
+    const receiveLegacyHeight = (event: MessageEvent<unknown>) => {
+      if (event.origin !== LEGACY_ORIGIN || !isLegacyContentHeightMessage(event.data)) {
+        return;
+      }
+
+      setLegacyContentHeight(Math.ceil(event.data.height));
+    };
+
+    window.addEventListener('message', receiveLegacyHeight);
+    requestLegacyContentHeight();
+
+    return () => window.removeEventListener('message', receiveLegacyHeight);
+  }, [requestLegacyContentHeight]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.content}
+      scrollEnabled={legacyContentHeight !== null}
+      style={styles.container}
+    >
       <View
         accessibilityLabel="Navegação principal do Museu da Computação"
         onLayout={(event) => setLegacyNavigationHeight(event.nativeEvent.layout.height)}
@@ -45,22 +96,24 @@ const Home = () => {
         </View>
       </View>
 
-      <View style={[styles.legacyFrame, { height: legacyFrameHeight }]}>
+      <View style={styles.legacyFrame}>
         <iframe
-          src="https://museucomputacao.github.io"
+          ref={legacyFrameRef}
+          src="https://museucomputacao.github.io/?embed=1"
           title="Página pública legada do Museu da Computação"
           width="100%"
           frameBorder={0}
+          onLoad={requestLegacyContentHeight}
+          scrolling={legacyContentHeight === null ? 'auto' : 'no'}
           style={{
             border: 0,
             display: 'block',
-            flexShrink: 0,
             height: legacyFrameHeight,
             width: '100%',
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -92,8 +145,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#17111D',
     flex: 1,
   },
+  content: {
+    flexGrow: 1,
+  },
   legacyFrame: {
-    overflow: 'hidden',
     width: '100%',
   },
   link: {
