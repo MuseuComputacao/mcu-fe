@@ -15,6 +15,7 @@ const nativeRoutes = [
 const Home = () => {
   const { height: viewportHeight } = useWindowDimensions();
   const [legacyNavigationHeight, setLegacyNavigationHeight] = useState(0);
+  const legacyFrameHeight = Math.max(viewportHeight - legacyNavigationHeight, 0);
 
   return (
     <View style={styles.container}>
@@ -44,7 +45,7 @@ const Home = () => {
         </View>
       </View>
 
-      <View style={[styles.legacyFrame, { height: viewportHeight }]}>
+      <View style={[styles.legacyFrame, { height: legacyFrameHeight }]}>
         <iframe
           src="https://museucomputacao.github.io"
           title="Página pública legada do Museu da Computação"
@@ -54,8 +55,7 @@ const Home = () => {
             border: 0,
             display: 'block',
             flexShrink: 0,
-            height: viewportHeight,
-            transform: `translateY(-${legacyNavigationHeight}px)`,
+            height: legacyFrameHeight,
             width: '100%',
           }}
         />
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   legacyFrame: {
-    flex: 1,
     overflow: 'hidden',
     width: '100%',
   },
